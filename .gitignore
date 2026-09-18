@@ -1,0 +1,60 @@
+# Project-local environments, tooling, and caches
+.venv/
+.tools/
+.cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Build and validation artifacts
+dist/
+build/
+*.egg-info/
+.artifacts/
+
+# Local dictionary editing history and incomplete drafts
+/packs/.history/
+/packs/.draft-*/
+
+# Local settings and credentials
+/.local/
+/docs/reference/
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
+
+# Source portfolios and generated output are not repository content.
+/data/
+/inputs/
+/outputs/
+/corpus/
+/runs/
+*.log
+*.pem
+*.key
+*.pfx
+*.p12
+*.csv
+*.[xX][mM][lL]
+*.tsv
+*.parquet
+*.xlsx
+*.xlsm
+*.xlsb
+*.xls
+*.pdf
+*.zip
+
+# Commit only deliberately authored synthetic fixtures in this location.
+!tests/fixtures/**/*.csv
+!tests/fixtures/**/*.[xX][mM][lL]
+!tests/fixtures/**/*.tsv
+!tests/fixtures/**/*.xlsx

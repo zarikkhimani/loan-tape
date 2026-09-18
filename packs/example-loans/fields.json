@@ -1,0 +1,73 @@
+[
+  {
+    "id": "loan_id",
+    "label": "Loan identifier",
+    "definition": "Source-assigned identifier of the loan; preserve every character and leading zero.",
+    "entity": "loan",
+    "data_type": "identifier",
+    "references": [
+      {
+        "source": "example",
+        "locator": "Project-authored synthetic example, version 1.0.0"
+      }
+    ],
+    "aliases": [
+      "Loan ID"
+    ],
+    "required": true,
+    "blank_allowed": false
+  },
+  {
+    "id": "principal_balance",
+    "label": "Loan principal balance",
+    "definition": "Principal outstanding for the whole loan at the supplied reporting date in this synthetic example.",
+    "entity": "loan",
+    "data_type": "decimal",
+    "references": [
+      {
+        "source": "example",
+        "locator": "Project-authored synthetic example, version 1.0.0"
+      }
+    ],
+    "unit": "currency units",
+    "context": [
+      "currency",
+      "reporting_date",
+      "whole_loan_scope"
+    ],
+    "aliases": [
+      "Balance"
+    ],
+    "notes": "A holding balance or a tranche balance needs a separate definition. Zero is a value."
+  },
+  {
+    "id": "maturity_date",
+    "label": "Maturity date",
+    "definition": "Contractual final maturity date as supplied in the synthetic example.",
+    "entity": "loan",
+    "data_type": "date",
+    "references": [
+      {
+        "source": "example",
+        "locator": "Project-authored synthetic example, version 1.0.0"
+      }
+    ],
+    "context": [
+      "source_date_convention"
+    ]
+  },
+  {
+    "id": "status",
+    "label": "Loan status",
+    "definition": "Status as supplied in the synthetic example.",
+    "entity": "loan",
+    "data_type": "category",
+    "code_list": "loan_status",
+    "references": [
+      {
+        "source": "example",
+        "locator": "Project-authored synthetic example, version 1.0.0"
+      }
+    ]
+  }
+]

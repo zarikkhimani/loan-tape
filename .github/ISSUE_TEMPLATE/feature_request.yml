@@ -1,0 +1,19 @@
+name: Feature request
+description: Propose a specific analyst workflow or project improvement.
+body:
+  - type: markdown
+    attributes:
+      value: Use synthetic examples. Do not include borrower details, portfolio files, credentials, or original file paths.
+  - type: textarea
+    id: need
+    attributes:
+      label: Workflow and user need
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: What would a correct result look like?
+      description: Describe inputs, expected outputs, and how the result can be verified.
+    validations:
+      required: true

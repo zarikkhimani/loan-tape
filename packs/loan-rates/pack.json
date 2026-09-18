@@ -1,0 +1,8 @@
+{
+  "format_version": 1,
+  "id": "loan.rates",
+  "version": "1.0.0",
+  "name": "Loan rate field definitions",
+  "description": "Project-authored meanings for loan spreads, benchmarks, coupons, floors, caps and yields. Requires confirmed source mapping, units and context. This is not a market-data feed or an agreement-compliance rule pack.",
+  "asset_classes": ["loans"]
+}

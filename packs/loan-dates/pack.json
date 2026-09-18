@@ -1,0 +1,8 @@
+{
+  "format_version": 1,
+  "id": "loan.dates",
+  "version": "1.0.0",
+  "name": "Loan date field definitions",
+  "description": "Project-authored meanings for four date fields. Requires confirmed source mapping and context. This is not issued by SIFMA or another market association and is not a compliance rule pack.",
+  "asset_classes": ["loans"]
+}

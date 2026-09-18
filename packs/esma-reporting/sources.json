@@ -1,0 +1,23 @@
+[
+  {
+    "id": "instructions",
+    "title": "ESMA Reporting Instructions: Securitisation - Disclosure, End-of-day and Rejection messages",
+    "version": "1.4, 26 February 2021",
+    "uri": "supplied:esma65-8-6469_securitisation_disclosure_templates_reporting_instructions.pdf",
+    "sha256": "6346c3d746ee1d188bbfd74b4cdf2377cae658438c095cc58fdccb9af90f40e2"
+  },
+  {
+    "id": "end_of_day",
+    "title": "SecuritisationEndOfDayReportV01 spreadsheet",
+    "version": "1.3.0 (supplied in 1.3.1 folder)",
+    "uri": "supplied:DRAFT1auth.103.001.01_End Of Day Report_1.3.0.xlsx",
+    "sha256": "a92973d3fde5e23ba2511f76fb67695fd4e6f3ec7016ea5d9045a5f18dde24fa"
+  },
+  {
+    "id": "rejection",
+    "title": "SecuritisationRejectionReportV01 spreadsheet",
+    "version": "1.3.0 (supplied in 1.3.1 folder)",
+    "uri": "supplied:DRAFT1auth.104.001.01_Rejection report_1.3.0.xlsx",
+    "sha256": "bdf4ec9da37fc71f46cf5d9aaf9aa8a8613e5c84fa153ca8e91b4e73af1c7a23"
+  }
+]

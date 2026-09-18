@@ -1,0 +1,54 @@
+[
+  {
+    "id": "closing_date",
+    "label": "Closing date",
+    "definition": "Date identified by the source as completion of the original closing for the mapped loan or facility. The source must establish the closing event and the loan or facility represented.",
+    "entity": "loan",
+    "data_type": "date",
+    "aliases": ["Closing Date", "Original Closing Date"],
+    "context": ["source_date_convention", "closing_event", "loan_or_facility_scope"],
+    "required": null,
+    "blank_allowed": null,
+    "notes": "Do not equate signing, funding, effective date, amendment closing, acquisition or secondary settlement with original closing without source confirmation. Calendar applicability is separate.",
+    "references": [{"source": "project.date.fields", "locator": "closing_date"}]
+  },
+  {
+    "id": "original_maturity_date",
+    "label": "Original maturity date",
+    "definition": "Contractual final maturity specified when the mapped loan or facility was originally established, before subsequent changes to that maturity.",
+    "entity": "loan",
+    "data_type": "date",
+    "aliases": ["Original Maturity Date", "Initial Maturity Date"],
+    "context": ["source_date_convention", "original_agreement", "loan_or_facility_scope"],
+    "required": null,
+    "blank_allowed": null,
+    "notes": "Keep distinct from current, projected, reinvested, springing and adjusted payment dates. A generic Maturity Date header does not establish this meaning.",
+    "references": [{"source": "project.date.fields", "locator": "original_maturity_date"}]
+  },
+  {
+    "id": "current_maturity_date",
+    "label": "Current maturity date",
+    "definition": "Contractual final maturity represented by the source as in effect for the mapped loan or facility at the supplied reporting date, incorporating applicable effective amendments or extensions.",
+    "entity": "loan",
+    "data_type": "date",
+    "aliases": ["Current Maturity Date", "Maturity Date"],
+    "context": ["source_date_convention", "reporting_date", "effective_agreement", "loan_or_facility_scope"],
+    "required": null,
+    "blank_allowed": null,
+    "notes": "Aliases are search suggestions only. Confirm meaning and as-of context; do not infer an extension, springing-maturity condition or business-day adjustment from this field alone.",
+    "references": [{"source": "project.date.fields", "locator": "current_maturity_date"}]
+  },
+  {
+    "id": "reporting_date",
+    "label": "Reporting date",
+    "definition": "Calendar date to which the supplied report or portfolio information relates, as stated by the source.",
+    "entity": "report",
+    "data_type": "date",
+    "aliases": ["Reporting Date", "As of Date", "As-of Date", "Cut-off Date"],
+    "context": ["source_date_convention", "report_scope", "as_of_basis"],
+    "required": null,
+    "blank_allowed": null,
+    "notes": "Confirm any cut-off alias against its source definition. Do not substitute the application session date, file modification time, delivery date or report creation timestamp.",
+    "references": [{"source": "project.date.fields", "locator": "reporting_date"}]
+  }
+]

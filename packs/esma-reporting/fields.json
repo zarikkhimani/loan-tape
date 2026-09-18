@@ -1,0 +1,94 @@
+[
+  {
+    "id": "pool_addition_date",
+    "label": "Pool addition date",
+    "definition": "Date of addition of the underlying exposure to the securitisation pool.",
+    "entity": "loan",
+    "data_type": "date",
+    "references": [
+      {
+        "source": "instructions",
+        "locator": "Page 15, paragraphs 26-28"
+      }
+    ],
+    "context": [
+      "securitisation_pool",
+      "source_date_convention"
+    ],
+    "missing_code_list": "no_data",
+    "missing_codes": [
+      "ND5"
+    ],
+    "blank_allowed": false,
+    "notes": "Page 15 uses CRPL7 and other asset-class fields to illustrate a date or ND5 choice. Obtain the full Annex IV definition and its instructions before using this in loan analysis."
+  },
+  {
+    "id": "tranche_principal_balance",
+    "label": "Tranche principal balance",
+    "definition": "Current principal balance of a securitisation tranche, bond, or subordinated loan.",
+    "entity": "tranche",
+    "data_type": "decimal",
+    "references": [
+      {
+        "source": "end_of_day",
+        "locator": "DRAFT1auth.103.001.01!Y61"
+      }
+    ],
+    "unit": "EUR",
+    "context": [
+      "data_cutoff_date",
+      "tranche_identity"
+    ],
+    "aliases": [
+      "Current Principal Balance"
+    ],
+    "notes": "This template specifies EUR using ECB exchange rates for the previous working day. This is reporting metadata, not an instruction for Loan Tape to convert currency."
+  },
+  {
+    "id": "aggregate_tranche_balance",
+    "label": "Aggregate tranche principal balance",
+    "definition": "Sum of the principal balances of the securitisation tranches, bonds, and subordinated loans.",
+    "entity": "report",
+    "data_type": "decimal",
+    "references": [
+      {
+        "source": "end_of_day",
+        "locator": "DRAFT1auth.103.001.01!Y91"
+      }
+    ],
+    "unit": "EUR",
+    "context": [
+      "data_cutoff_date",
+      "securitisation_identity"
+    ],
+    "notes": "Represents the issued liabilities, not the collateral loan portfolio balance. The template specifies the previous working day ECB conversion basis."
+  },
+  {
+    "id": "rejection_reason",
+    "label": "Rejection reason category",
+    "definition": "Category assigned to a rejected securitisation reporting submission.",
+    "entity": "report",
+    "data_type": "category",
+    "code_list": "rejection_reason",
+    "references": [
+      {
+        "source": "rejection",
+        "locator": "DRAFT1auth.104.001.01!H88:X93"
+      }
+    ]
+  },
+  {
+    "id": "validation_rule_id",
+    "label": "Validation rule identifier",
+    "definition": "Identifier of the validation rule associated with a reported rejection.",
+    "entity": "report",
+    "data_type": "identifier",
+    "references": [
+      {
+        "source": "rejection",
+        "locator": "DRAFT1auth.104.001.01!I96:X96"
+      }
+    ],
+    "notes": "This defines the reporting field. It does not supply or execute the validation rules themselves."
+  }
+]

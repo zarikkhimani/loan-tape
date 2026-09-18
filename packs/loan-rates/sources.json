@@ -1,0 +1,8 @@
+[
+  {
+    "id": "project.rate.fields",
+    "title": "Loan Tape rate field definitions and parsing policy",
+    "version": "1.0.0",
+    "uri": "project:docs/RATES.md"
+  }
+]

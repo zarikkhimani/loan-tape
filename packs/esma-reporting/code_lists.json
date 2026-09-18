@@ -1,0 +1,74 @@
+[
+  {
+    "id": "no_data",
+    "references": [
+      {
+        "source": "instructions",
+        "locator": "Page 15, paragraphs 26-28"
+      }
+    ],
+    "codes": [
+      {
+        "value": "ND1",
+        "label": "Not collected",
+        "definition": "Collection was not required by the lending or underwriting criteria."
+      },
+      {
+        "value": "ND2",
+        "label": "Not loaded",
+        "definition": "Collected during the application but not loaded into the originator reporting system."
+      },
+      {
+        "value": "ND3",
+        "label": "Separate system",
+        "definition": "Collected during the application and held in a different system."
+      },
+      {
+        "value": "ND4",
+        "label": "Available later",
+        "definition": "Collected but available only from a specified date. The source requires ND4-YYYY-MM-DD; this catalog stores the category, not a token parser."
+      },
+      {
+        "value": "ND5",
+        "label": "Not applicable",
+        "definition": "The information does not apply to this field in its reporting context."
+      }
+    ]
+  },
+  {
+    "id": "rejection_reason",
+    "references": [
+      {
+        "source": "rejection",
+        "locator": "DRAFT1auth.104.001.01!V89:X93"
+      }
+    ],
+    "codes": [
+      {
+        "value": "BIZZ",
+        "label": "Business",
+        "definition": "The submission fails one or more content validations."
+      },
+      {
+        "value": "LOGL",
+        "label": "Logical",
+        "definition": "The submission item code is outside the permitted reporting values."
+      },
+      {
+        "value": "PERM",
+        "label": "Permission",
+        "definition": "The reporting entity is not allowed to submit the information."
+      },
+      {
+        "value": "SCHE",
+        "label": "Schema",
+        "definition": "The submission does not conform to the required schema."
+      },
+      {
+        "value": "REPS",
+        "label": "Representativeness",
+        "definition": "The submission fails the representativeness requirement referenced by the template."
+      }
+    ]
+  }
+]

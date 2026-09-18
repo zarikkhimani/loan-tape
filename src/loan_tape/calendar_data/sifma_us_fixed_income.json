@@ -1,0 +1,1440 @@
+{
+  "format_version": 1,
+  "version": "2.0.0",
+  "verified_year": 2027,
+  "sources": [
+    {
+      "id": "sifma-us-archive",
+      "title": "SIFMA U.S. Holiday Archive",
+      "url": "https://www.sifma.org/resources/general/us-holiday-archive",
+      "published_on": null,
+      "verified_on": "2026-09-17"
+    },
+    {
+      "id": "sifma-us-current",
+      "title": "SIFMA U.S. Fixed Income Holiday Recommendations for 2026 and 2027",
+      "url": "https://www.sifma.org/resources/general/holiday-schedule",
+      "published_on": "2025-12-17",
+      "verified_on": "2026-09-17"
+    }
+  ],
+  "assumptions": [
+    "SIFMA is the sole calendar provider. Its U.S. recommendations apply to trading in the fixed-income products identified by SIFMA and are recommendations subject to change, not universal loan-contract terms.",
+    "A published SIFMA full-close recommendation makes the date non-business for this screening calendar. A published early close remains a business day and is retained as an event; SIFMA states that early closes do not affect settlement closing time.",
+    "Weekends are deterministic for every supported year. Weekday dates outside the maintained published range remain unknown; current holiday patterns are neither backcast nor projected.",
+    "The governing agreement must establish whether this SIFMA market calendar applies to a loan date. The engine flags dates for review and never adjusts source values."
+  ],
+  "calendars": {
+    "us.sifma_fixed_income": {
+      "published_years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026,
+        2027
+      ],
+      "source_ids": [
+        "sifma-us-archive",
+        "sifma-us-current"
+      ],
+      "projection_sources": [],
+      "events": [
+        [
+          "2019-01-01",
+          "2019-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-01-21",
+          "2019-01-21",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-02-18",
+          "2019-02-18",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-04-18",
+          "2019-04-19",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-04-19",
+          "2019-04-19",
+          "Good Friday",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-05-24",
+          "2019-05-27",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-05-27",
+          "2019-05-27",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-07-03",
+          "2019-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-07-04",
+          "2019-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-09-02",
+          "2019-09-02",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-10-14",
+          "2019-10-14",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-11-11",
+          "2019-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-11-28",
+          "2019-11-28",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-11-29",
+          "2019-11-28",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-12-24",
+          "2019-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-12-25",
+          "2019-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2019-12-31",
+          "2020-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-01-01",
+          "2020-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-01-20",
+          "2020-01-20",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-02-17",
+          "2020-02-17",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-04-09",
+          "2020-04-10",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-04-10",
+          "2020-04-10",
+          "Good Friday",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-05-22",
+          "2020-05-25",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-05-25",
+          "2020-05-25",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-07-02",
+          "2020-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-07-03",
+          "2020-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-09-07",
+          "2020-09-07",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-10-12",
+          "2020-10-12",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-11-11",
+          "2020-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-11-26",
+          "2020-11-26",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-11-27",
+          "2020-11-26",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-12-24",
+          "2020-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-12-25",
+          "2020-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2020-12-31",
+          "2021-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-01-01",
+          "2021-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-01-18",
+          "2021-01-18",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-02-15",
+          "2021-02-15",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-04-02",
+          "2021-04-02",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-05-28",
+          "2021-05-31",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-05-31",
+          "2021-05-31",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-07-02",
+          "2021-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-07-05",
+          "2021-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-09-06",
+          "2021-09-06",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-10-11",
+          "2021-10-11",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-11-11",
+          "2021-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-11-25",
+          "2021-11-25",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-11-26",
+          "2021-11-25",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-12-23",
+          "2021-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-12-24",
+          "2021-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2021-12-31",
+          "2022-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-01-17",
+          "2022-01-17",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-02-21",
+          "2022-02-21",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-04-14",
+          "2022-04-15",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-04-15",
+          "2022-04-15",
+          "Good Friday",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-05-27",
+          "2022-05-30",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-05-30",
+          "2022-05-30",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-06-20",
+          "2022-06-19",
+          "Juneteenth",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-07-01",
+          "2022-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-07-04",
+          "2022-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-09-05",
+          "2022-09-05",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-10-10",
+          "2022-10-10",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-11-11",
+          "2022-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-11-24",
+          "2022-11-24",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-11-25",
+          "2022-11-24",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-12-23",
+          "2022-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-12-26",
+          "2022-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2022-12-30",
+          "2023-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-01-02",
+          "2023-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-01-16",
+          "2023-01-16",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-02-20",
+          "2023-02-20",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-04-07",
+          "2023-04-07",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-05-26",
+          "2023-05-29",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-05-29",
+          "2023-05-29",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-06-19",
+          "2023-06-19",
+          "Juneteenth",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-07-03",
+          "2023-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-07-04",
+          "2023-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-09-04",
+          "2023-09-04",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-10-09",
+          "2023-10-09",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-11-23",
+          "2023-11-23",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-11-24",
+          "2023-11-23",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-12-22",
+          "2023-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-12-25",
+          "2023-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2023-12-29",
+          "2024-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-01-01",
+          "2024-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-01-15",
+          "2024-01-15",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-02-19",
+          "2024-02-19",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-03-28",
+          "2024-03-29",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-03-29",
+          "2024-03-29",
+          "Good Friday",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-05-24",
+          "2024-05-27",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-05-27",
+          "2024-05-27",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-06-19",
+          "2024-06-19",
+          "Juneteenth",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-07-03",
+          "2024-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-07-04",
+          "2024-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-09-02",
+          "2024-09-02",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-10-14",
+          "2024-10-14",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-11-11",
+          "2024-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-11-28",
+          "2024-11-28",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-11-29",
+          "2024-11-28",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-12-24",
+          "2024-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-12-25",
+          "2024-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2024-12-31",
+          "2025-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-01-01",
+          "2025-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-01-20",
+          "2025-01-20",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-02-17",
+          "2025-02-17",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-04-17",
+          "2025-04-18",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-04-18",
+          "2025-04-18",
+          "Good Friday",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-05-23",
+          "2025-05-26",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-05-26",
+          "2025-05-26",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-06-19",
+          "2025-06-19",
+          "Juneteenth",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-07-03",
+          "2025-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-07-04",
+          "2025-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-09-01",
+          "2025-09-01",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-10-13",
+          "2025-10-13",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-11-11",
+          "2025-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-11-27",
+          "2025-11-27",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-11-28",
+          "2025-11-27",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-12-24",
+          "2025-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-12-25",
+          "2025-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2025-12-31",
+          "2026-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-archive"
+          ]
+        ],
+        [
+          "2026-01-01",
+          "2026-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-01-19",
+          "2026-01-19",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-02-16",
+          "2026-02-16",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-04-03",
+          "2026-04-03",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-05-22",
+          "2026-05-25",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-05-25",
+          "2026-05-25",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-06-19",
+          "2026-06-19",
+          "Juneteenth",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-07-02",
+          "2026-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-07-03",
+          "2026-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-09-07",
+          "2026-09-07",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-10-12",
+          "2026-10-12",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-11-11",
+          "2026-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-11-26",
+          "2026-11-26",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-11-27",
+          "2026-11-26",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-12-24",
+          "2026-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-12-25",
+          "2026-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2026-12-31",
+          "2027-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-01-01",
+          "2027-01-01",
+          "New Year's Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-01-18",
+          "2027-01-18",
+          "Martin Luther King Jr. Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-02-15",
+          "2027-02-15",
+          "Presidents Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-03-25",
+          "2027-03-26",
+          "Good Friday",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-03-26",
+          "2027-03-26",
+          "Good Friday",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-05-28",
+          "2027-05-31",
+          "Memorial Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-05-31",
+          "2027-05-31",
+          "Memorial Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-06-18",
+          "2027-06-19",
+          "Juneteenth",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-07-02",
+          "2027-07-04",
+          "U.S. Independence Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-07-05",
+          "2027-07-04",
+          "U.S. Independence Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-09-06",
+          "2027-09-06",
+          "Labor Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-10-11",
+          "2027-10-11",
+          "Columbus Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-11-11",
+          "2027-11-11",
+          "Veterans Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-11-25",
+          "2027-11-25",
+          "Thanksgiving Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-11-26",
+          "2027-11-25",
+          "Thanksgiving Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-12-23",
+          "2027-12-25",
+          "Christmas Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-12-24",
+          "2027-12-25",
+          "Christmas Day",
+          "full_closure",
+          [
+            "sifma-us-current"
+          ]
+        ],
+        [
+          "2027-12-31",
+          "2028-01-01",
+          "New Year's Day",
+          "early_close",
+          [
+            "sifma-us-current"
+          ]
+        ]
+      ],
+      "assumptions": [
+        "Published coverage is maintained for calendar years 2019 through 2027 because it spans the supplied date population and SIFMA has issued the 2027 schedule.",
+        "No future holiday calendar is inferred. Unpublished weekdays remain unknown until a credible SIFMA schedule is added."
+      ]
+    }
+  },
+  "conflicts": []
+}

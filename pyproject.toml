@@ -1,0 +1,81 @@
+[build-system]
+requires = ["uv_build==0.12.15"]
+build-backend = "uv_build"
+
+[project]
+name = "loan-tape"
+version = "0.1.0"
+description = "Source-preserving loan-tape normalization, validation, and research tooling."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["loan-tape", "credit", "private-credit", "excel", "xml", "data-quality"]
+dependencies = [
+    "defusedxml>=0.7.1,<1",
+    "openpyxl>=3.1.5,<4",
+    "tkinterdnd2>=0.4.2,<1",
+    "xlwings>=0.33,<1; sys_platform == 'win32'",
+    "xmlschema>=4.3.2,<5",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Win32 (MS Windows)",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
+
+[project.scripts]
+loan-tape = "loan_tape.cli:main"
+
+[project.urls]
+Documentation = "https://github.com/zarikkhimani/loan-tape#readme"
+Repository = "https://github.com/zarikkhimani/loan-tape"
+Issues = "https://github.com/zarikkhimani/loan-tape/issues"
+Changelog = "https://github.com/zarikkhimani/loan-tape/blob/main/CHANGELOG.md"
+Security = "https://github.com/zarikkhimani/loan-tape/security/policy"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=8,<10",
+  "ruff>=0.9,<1",
+]
+
+[tool.uv]
+required-version = "==0.12.15"
+
+[tool.uv.build-backend]
+source-include = ["LICENSE", "SECURITY.md", "docs/OPERATIONS.md", "docs/RELEASING.md"]
+source-exclude = [
+  "packs/.history", "packs/.draft-*",
+  ".cache", ".tools", ".venv", ".artifacts", ".local", "docs/reference",
+  "inputs", "outputs", "data", "corpus", "runs",
+  "**/.env", "**/.env.*", "**/*.log", "**/*.pem", "**/*.key", "**/*.pfx", "**/*.p12",
+]
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = [".tools", ".cache", ".artifacts", "docs/reference"]
+force-exclude = true
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "scripts"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+cache_dir = ".cache/pytest/$LOAN_TAPE_TEST_USER"

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "loan_status",
+    "references": [
+      {
+        "source": "example",
+        "locator": "Project-authored synthetic example, version 1.0.0"
+      }
+    ],
+    "codes": [
+      {
+        "value": "CURRENT",
+        "label": "Current",
+        "definition": "Synthetic status for a loan reported as current."
+      },
+      {
+        "value": "DEFAULT",
+        "label": "Default",
+        "definition": "Synthetic status for a loan reported as in default."
+      }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "id": "esma.reporting",
+  "version": "0.1.0",
+  "name": "ESMA reporting reference (selected fields)",
+  "description": "Reviewed subset of the supplied 2021 instructions and end-of-day/rejection templates. Not the full corporate-loan dictionary or a compliance ruleset. Summaries are project-authored.",
+  "asset_classes": [
+    "corporate-clo",
+    "other-securitisations"
+  ]
+}

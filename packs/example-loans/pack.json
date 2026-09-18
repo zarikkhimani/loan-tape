@@ -1,0 +1,10 @@
+{
+  "format_version": 1,
+  "id": "example.loans",
+  "version": "1.0.0",
+  "name": "Example loan dictionary",
+  "description": "Synthetic authoring template. These definitions are project examples, not regulatory requirements.",
+  "asset_classes": [
+    "synthetic-corporate-loans"
+  ]
+}

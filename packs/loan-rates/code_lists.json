@@ -1,0 +1,119 @@
+[
+  {
+    "id": "rate_type",
+    "references": [
+      {"source": "project.rate.fields", "locator": "Rate field dictionary: rate_type"}
+    ],
+    "codes": [
+      {
+        "value": "fixed",
+        "label": "Fixed",
+        "definition": "The applicable coupon is represented as fixed rather than linked to a reference rate for the stated period."
+      },
+      {
+        "value": "floating",
+        "label": "Floating",
+        "definition": "The applicable coupon is represented as linked to a reference rate for the stated period."
+      },
+      {
+        "value": "hybrid",
+        "label": "Hybrid or changing",
+        "definition": "The source establishes fixed and floating periods, a toggle, or another changing rate structure that cannot be represented as only fixed or only floating."
+      },
+      {
+        "value": "other",
+        "label": "Other established type",
+        "definition": "The source establishes a rate type outside the enumerated values; retain its exact description separately."
+      }
+    ]
+  },
+  {
+    "id": "reference_rate",
+    "references": [
+      {"source": "project.rate.fields", "locator": "Rate field dictionary: reference_rate"}
+    ],
+    "codes": [
+      {
+        "value": "usd.sofr",
+        "label": "USD SOFR",
+        "definition": "The source identifies a USD SOFR-based reference rate. Method and tenor remain separate required context."
+      },
+      {
+        "value": "usd.prime",
+        "label": "U.S. prime rate",
+        "definition": "The source specifically identifies a U.S. prime rate. This code is not interchangeable with an agreement-defined Base Rate or ABR."
+      },
+      {
+        "value": "agreement.base_rate",
+        "label": "Agreement-defined Base Rate or ABR",
+        "definition": "The source identifies a Base Rate or ABR whose operative definition depends on the applicable agreement. It is not assumed to equal prime."
+      },
+      {
+        "value": "usd.fed_funds",
+        "label": "USD federal funds rate",
+        "definition": "The source identifies a federal-funds-based reference rate; the exact convention remains required context."
+      },
+      {
+        "value": "usd.libor",
+        "label": "USD LIBOR",
+        "definition": "The source identifies USD LIBOR. Tenor, observation date and any fallback treatment remain separate context."
+      },
+      {
+        "value": "eur.euribor",
+        "label": "EUR Euribor",
+        "definition": "The source identifies Euribor. Currency, tenor and convention remain separate context."
+      },
+      {
+        "value": "gbp.sonia",
+        "label": "GBP SONIA",
+        "definition": "The source identifies SONIA. Method and observation convention remain separate context."
+      },
+      {
+        "value": "other",
+        "label": "Other established reference rate",
+        "definition": "The source establishes another reference rate; retain its exact name and convention separately."
+      }
+    ]
+  },
+  {
+    "id": "reference_rate_tenor",
+    "references": [
+      {"source": "project.rate.fields", "locator": "Rate field dictionary: reference_rate_tenor"}
+    ],
+    "codes": [
+      {"value": "overnight", "label": "Overnight", "definition": "Overnight tenor as established by the source."},
+      {"value": "1m", "label": "One month", "definition": "One-month tenor as established by the source."},
+      {"value": "3m", "label": "Three months", "definition": "Three-month tenor as established by the source."},
+      {"value": "6m", "label": "Six months", "definition": "Six-month tenor as established by the source."},
+      {"value": "12m", "label": "Twelve months", "definition": "Twelve-month tenor as established by the source."},
+      {"value": "other", "label": "Other established tenor", "definition": "Another tenor established by the source; retain the exact source description separately."}
+    ]
+  },
+  {
+    "id": "reference_rate_method",
+    "references": [
+      {"source": "project.rate.fields", "locator": "Rate field dictionary: reference_rate_method"}
+    ],
+    "codes": [
+      {"value": "term", "label": "Term", "definition": "A forward-looking term method as identified by the source."},
+      {"value": "daily_simple", "label": "Daily simple", "definition": "A daily-simple method as identified by the source."},
+      {"value": "compounded_in_arrears", "label": "Compounded in arrears", "definition": "A compounded-in-arrears method as identified by the source."},
+      {"value": "other", "label": "Other established method", "definition": "Another method established by the source; retain the exact convention separately."}
+    ]
+  },
+  {
+    "id": "yield_measure",
+    "references": [
+      {"source": "project.rate.fields", "locator": "Rate field dictionary: yield_measure"}
+    ],
+    "codes": [
+      {"value": "current_yield", "label": "Current yield", "definition": "Current yield as explicitly identified by the source."},
+      {"value": "yield_to_maturity", "label": "Yield to maturity", "definition": "Yield to maturity as explicitly identified by the source."},
+      {"value": "yield_to_worst", "label": "Yield to worst", "definition": "Yield to worst as explicitly identified by the source."},
+      {"value": "discount_margin", "label": "Discount margin", "definition": "Discount margin as explicitly identified by the source; it is not the contractual spread_bps field."},
+      {"value": "effective_yield", "label": "Effective yield", "definition": "Effective yield as explicitly identified by the source."},
+      {"value": "internal_rate_of_return", "label": "Internal rate of return", "definition": "Internal rate of return as explicitly identified by the source."},
+      {"value": "other", "label": "Other established yield measure", "definition": "Another yield measure established by the source; retain its exact definition separately."}
+    ]
+  }
+]
