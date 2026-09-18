@@ -183,10 +183,12 @@ def test_saved_workbook_validation_reconciles_rows_and_rejects_formulas(saved_ru
         _validate_output(target, payload)
 
 
-def test_export_preflight_never_overwrites_an_existing_file(saved_run, tmp_path):
+def test_export_preflight_never_overwrites_an_existing_file(saved_run, tmp_path, monkeypatch):
     run, source = saved_run
     target = tmp_path / "existing.xlsx"
     target.write_bytes(b"keep")
+    # Exercise the Windows export guard even on a Linux test runner; no writer starts.
+    monkeypatch.setattr("loan_tape.date_export.sys.platform", "win32")
     with pytest.raises(FileExistsError, match="not overwritten"):
         export_date_run(run, target, source_path=source)
     assert target.read_bytes() == b"keep"

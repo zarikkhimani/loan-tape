@@ -2,12 +2,15 @@
 
 ## Unreleased
 
-- Simplified the README around installation, a first review, supported files, and
-  results. Added a task-based documentation index and a detailed user guide;
-  source packages include the linked guides. Application behavior is unchanged.
+- Nothing yet.
 
 ## 0.1.0 - 2026-09-17
 
+- Simplified the README around installation, a first review, supported files, and
+  results. Added a task-based documentation index and a detailed user guide;
+  source packages include the linked guides. Application behavior is unchanged.
+- Made the existing-output export test exercise the Windows preflight explicitly
+  on every test platform; the separate unsupported-platform test remains in place.
 - Prepared the first public alpha under the MIT License with public-release metadata,
   a contributor workflow, private vulnerability-reporting guidance, and an exact
   step-by-step release checklist.
