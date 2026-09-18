@@ -24,6 +24,8 @@ Report suspected vulnerabilities through the private route in
 
 ## Everyday commands
 
+On Windows, run `setup.bat` once and use the wrappers below from the project folder.
+
 ```powershell
 .\run.bat --help
 .\check.bat
@@ -31,7 +33,19 @@ Report suspected vulnerabilities through the private route in
 .\dev.bat pytest
 ```
 
-On Linux use `.venv/bin/python scripts/dev.py <command> [arguments]`. The full check entry point is `python scripts/check.py` on either operating system.
+On Linux, prepare the environment with an existing Python 3.12 installation:
+
+```sh
+python3.12 scripts/setup.py
+.venv/bin/python -m loan_tape --help
+.venv/bin/python scripts/check.py
+```
+
+For targeted tools, use `.venv/bin/python scripts/dev.py <command> [arguments]`.
+Desktop use additionally requires Tcl/Tk and a graphical display. Windows is the
+verified desktop target; date-workflow Excel export requires Windows and desktop Excel.
+The full check entry point is `python scripts/check.py` from a configured environment
+on either operating system.
 
 Setup, checks, and `dev.bat` automatically keep temporary files and uv, pip, Ruff,
 and mypy caches under `.cache/`. Direct `python -m pytest` runs also configure

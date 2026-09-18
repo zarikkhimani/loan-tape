@@ -1,8 +1,9 @@
 # Operating guide
 
 Loan Tape supports local analyst review of CSV, XML, and Excel source data. Use
-the [README](../README.md) for launch instructions and [Product](PRODUCT.md) for
-current capabilities. Inspection findings require review against source evidence;
+the [README](../README.md) for launch instructions, the [User guide](USER_GUIDE.md)
+for desktop controls, and [Product](PRODUCT.md) for current capabilities.
+Inspection findings require review against source evidence;
 they do not establish a loan agreement violation or financial correctness.
 
 ## Before using portfolio data

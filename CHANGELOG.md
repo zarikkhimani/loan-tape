@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-- Nothing yet.
+- Simplified the README around installation, a first review, supported files, and
+  results. Added a task-based documentation index and a detailed user guide;
+  source packages include the linked guides. Application behavior is unchanged.
 
 ## 0.1.0 - 2026-09-17
 

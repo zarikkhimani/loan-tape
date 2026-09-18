@@ -30,6 +30,8 @@ SOURCE_SUFFIXES = frozenset(
 REQUIRED_SOURCE_GUIDES = (
     "LICENSE",
     "SECURITY.md",
+    "docs/README.md",
+    "docs/USER_GUIDE.md",
     "docs/OPERATIONS.md",
     "docs/RELEASING.md",
 )

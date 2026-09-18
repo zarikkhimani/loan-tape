@@ -48,7 +48,7 @@ dev = [
 required-version = "==0.12.15"
 
 [tool.uv.build-backend]
-source-include = ["LICENSE", "SECURITY.md", "docs/OPERATIONS.md", "docs/RELEASING.md"]
+source-include = ["LICENSE", "SECURITY.md", "CONTRIBUTING.md", "CHANGELOG.md", "AGENTS.md", "docs/*.md"]
 source-exclude = [
   "packs/.history", "packs/.draft-*",
   ".cache", ".tools", ".venv", ".artifacts", ".local", "docs/reference",
