@@ -26,11 +26,11 @@ alpha release before reporting a problem that may already be fixed.
 
 ## Reporting a concern
 
-Report suspected vulnerabilities privately to the repository owner. Where enabled,
-use [GitHub private reporting](https://github.com/zarikkhimani/loan-tape/security/advisories/new).
+Report suspected vulnerabilities privately to the repository owner using
+[GitHub private reporting](https://github.com/zarikkhimani/loan-tape/security/advisories/new).
 If that route is unavailable, contact the owner through an existing private channel;
-do not fall back to a public issue. Private reporting availability and response
-commitments have not been established by this local setup.
+do not fall back to a public issue. Private vulnerability reporting is enabled for
+this repository; no response-time commitment is established.
 
 Include the affected revision/version, operating system and Python/Excel versions,
 the reachable operation, expected and observed behavior, impact, and a minimal

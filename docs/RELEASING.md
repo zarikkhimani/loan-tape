@@ -1,7 +1,7 @@
 # Release checklist
 
 Use this checklist for subsequent Loan Tape public alpha releases. The repository
-is already public, and `v0.1.0` is an existing alpha release. The current candidate
+is already public, and `v0.1.0` is an existing alpha release. The current release
 is **0.2.0**. Use a new version and tag for each release; preserve earlier tags,
 release notes, and downloadable assets.
 
@@ -130,7 +130,7 @@ Review existing settings rather than repeating first-publication setup:
 ## Retain and inspect the release build
 
 Build only from the clean, validated final revision. Use a new version-specific
-output directory; preserve previous builds. For the 0.2.0 candidate:
+output directory; preserve previous builds. For a 0.2.0 release build:
 
 ```powershell
 $releaseDirectory = '.\dist\0.2.0'

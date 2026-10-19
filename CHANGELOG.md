@@ -6,7 +6,7 @@ No changes recorded.
 
 ## 0.2.0 - 2026-10-19
 
-Alpha release candidate; publication is pending. The existing 0.1.0 release is unchanged.
+Alpha release. The existing 0.1.0 release and its downloads are preserved.
 
 - Expanded the README with format-specific capabilities, a complete review
   workflow, output meanings, optional matching setup, session retention, and

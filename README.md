@@ -11,9 +11,9 @@ workflows**.
 It runs locally and keeps original files unchanged. Analysts choose the data to
 review and the checks to apply; ambiguous values remain visible for review.
 
-> **Early alpha:** This README describes the **0.2.0 alpha release candidate**.
-> See the [0.2.0 changelog](CHANGELOG.md#020---2026-10-19) for changes awaiting
-> publication. Features and coverage are still being developed.
+> **Early alpha:** This README describes **Loan Tape 0.2.0 (alpha)**.
+> See the [0.2.0 changelog](CHANGELOG.md#020---2026-10-19) for this release's changes.
+> Features and coverage are still being developed.
 > Review findings and outputs against the source before use. The project is not
 > bank-approved or a substitute for underwriting, agreement review, or institutional
 > model validation.
