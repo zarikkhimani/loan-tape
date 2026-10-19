@@ -229,6 +229,7 @@ def run(scenario: str, work: Path) -> None:
                 sheet.append(("Closing Date", "Current Maturity Date"))
                 sheet.append(("2026-01-15", "2031-01-15"))
                 sheet.append(("2026-02-28", "2032-02-28"))
+                sheet["A20"] = "=1+1"  # Keep Excel startup out of this UI-only setup test.
                 book.save(source)
                 book.close()
             elif scenario == "inspect_navigation":

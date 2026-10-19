@@ -2,7 +2,72 @@
 
 ## Unreleased
 
-- Nothing yet.
+- Protected existing temporary files when CSV/XML settings, text audits or borrower
+  artifacts encounter a staging-name collision. Settings locks are released even
+  when temporary-file cleanup fails.
+- Centralized complete recipe-history validation across persistence, export and
+  borrower matching. Lower-level save/load APIs now reject incomplete staged runs.
+- Kept the date-setup UI fixture independent of desktop Excel comparison startup;
+  actual Excel integration remains covered by the explicit smoke tests.
+- Added Canonicalization Phase 8: complete saved CSV scopes with explicit reading
+  conventions, CSV/XML dictionary mappings, native record/outcome paging and
+  shared text repair, exact replacement, cell approval and replay. Native source
+  locations, namespaces and missingness states remain intact. Added no-overwrite
+  JSON audits, source/mapping/dictionary guards, session cleanup and actual-engine,
+  native UI and installed-wheel coverage. Transformed CSV/XML exports remain future work.
+- Fixed a Windows borrower-worker timeout cleanup race by waiting for every
+  process in the owned job before removing its temporary request/model files,
+  with bounded retries for transient sharing locks and visible cleanup failures.
+
+- Added Canonicalization Phase 7: optional Dedupe 3.0.3 borrower matching for saved
+  Excel data sets, explicit borrower-feature selection and representative pair
+  labels, candidate review and separate JSON relationship/audit export. No loan
+  rows are merged or rewritten. A pinned project-local portable compiler resolves
+  the Python 3.12 native dependency blocker without host changes. Source guards,
+  bounded execution, owned worker cleanup and installed-wheel matching smoke checks
+  are included. Matching accuracy still requires an independent labeled corpus.
+
+- Added Canonicalization Phase 6: a separate validated Excel export for completed
+  text/recipe results, optional compatible date-run composition, complete selected
+  source evidence, every step's decisions and self-contained audit history. Original
+  tokens and ISO dates remain literal text. Owned xlwings processes, exact saved-cell
+  validation, fresh input guards and no-replace publication protect sources and
+  competing output files. Added native export controls and real installed-wheel
+  Excel validation through `check.bat --excel-smoke`. Publication remains separate.
+- Added Canonicalization Phase 5: explicit local recipe saving/loading, immutable
+  ID/version files, template and field-schema binding, editable step order, fresh
+  cell approvals and complete-run publication. Recipe runs start from source and
+  stage intermediate approvals in memory; failures/cancellation publish no partial
+  history. Saved recipes survive Exit while source-bound results remain temporary.
+  Added service, native workflow and installed-wheel coverage. Phase 6 supplies
+  text-result exports.
+- Added Canonicalization Phase 4: pinned RapidFuzz spelling suggestions and a
+  session rule editor within **Clean text**. Candidates require explicit selection;
+  exact replacements preserve case, whitespace and Unicode. Category targets must
+  match frozen allowed values. Complete previews, per-cell approvals, rule and
+  suggestion evidence, replay, stale-input guards and worker cancellation retain
+  original workbook bytes. Added real-engine, native UI and installed-wheel checks.
+  Phases 5 and 6 supply persistent recipes and text-result exports.
+- Added Canonicalization Phase 3: the Excel **Clean text** workflow, pinned ftfy
+  6.3.1 proposals with optional NFC, an inactive borrower/facility-name dictionary,
+  full-population review, explicit per-cell approval, source navigation and separate
+  session revisions. Input/settings changes invalidate review; application rechecks
+  current evidence and metadata before publication. Added real-engine, native UI,
+  cancellation/shutdown and installed-wheel coverage. Text export and persistent
+  recipes were deferred; Phases 4 and 5 now supply exact rules and persistent recipes.
+- Fixed dictionary editor ownership so closed Tk variables are released on the UI
+  thread when an editor is replaced, rather than deferred to worker-side collection.
+- Added the Canonicalization Phase 2 Python foundation: complete Excel evidence,
+  immutable transformation previews, explicit cell approvals, derived revision
+  history and replay, bounded atomic publication and source-bound session cleanup.
+  Regression tests and an installed-wheel smoke test exercise the complete path.
+  Phase 3 supplies its first cleanup engine and desktop controls; Phase 5 supplies
+  recipes. Phase 6 supplies text-result exports.
+- Added the Canonicalization integration Phase 1 contract and locked, opt-in
+  Python 3.12 probes in isolated local environments. Five base engine cases pass;
+  DataPatch's whitespace normalization is explicitly excluded from approved literal
+  rules, and Dedupe's unavailable native build prerequisites remain a visible blocker.
+  Phase 1 itself changed no application features or normal runtime dependencies.
 
 ## 0.1.0 - 2026-09-17
 

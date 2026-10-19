@@ -1,5 +1,14 @@
 # Draft data contracts
 
+Phase 8 CSV/XML adapters use native source metadata in transformation snapshots:
+format, source SHA-256, explicit parser/group options, complete dimensions,
+header/field labels and first data record. CSV cells retain record/field plus
+physical line spans and actual record width; XML cells retain occurrence, node and
+field paths with namespace-to-URI evidence. No synthetic workbook coordinates are
+introduced. Fields reuse immutable dictionary/rule snapshots; proposals, approvals,
+population reconciliation and revisions reuse the existing transformation contract.
+See [SOURCE_ADAPTERS.md](SOURCE_ADAPTERS.md) for missingness and retention details.
+
 These are design constraints, not implemented schemas or a complete error taxonomy. Final field names and serialization formats will be versioned with their implementation.
 
 | Record family | Responsibility |
@@ -22,6 +31,39 @@ The independent dictionary pack/catalog format is implemented and versioned sepa
 
 ## Field semantics
 
+The [canonicalization integration contract](CANONICALIZATION.md#integration-contract-10)
+defines reviewed text transformations, exact rules, derived revisions and replay.
+Phase 2 implements version 1 snapshots, previews, approvals and immutable derived
+revision records, with an Excel adapter and atomic session storage. See the
+[implemented schemas and limits](CANONICALIZATION.md#phase-2-implementation).
+Phase 3 supplies pinned ftfy proposals and explicit desktop approvals. Its operation
+records the selected column, all effective settings and engine/dependency versions;
+application regenerates the exact reviewed output before publication. Phase 4 adds
+the versioned `exact-text-rules` operation with a complete literal table, selected
+column, policy and executor version. A rule chosen from spelling suggestions also
+records source/parent/corpus identities, score, threshold, comparison settings,
+Unicode version, scorer and RapidFuzz version. Replay verifies every eligible match
+against the table. Category replacement is limited to frozen allowed values under
+this specific policy; other transformations retain free-text eligibility.
+
+Phase 5 implements recipe format 1: stable ID, semantic version, name, source/template
+profile, applicability, relative mapped schema, frozen dictionary meanings and ordered
+supported operations. A canonical fingerprint covers the complete data-only document.
+Fresh source bindings record snapshot/recipe identities, profile, current reporting
+context and explicit reviewer/time. Every recipe operation embeds that binding and
+its recipe/step identity; no prior cell approvals are reused. Full-run envelopes
+also retain the recipe and binding. Only the complete approved chain is published.
+Saved recipes persist independently of temporary source-bound results. See
+[RECIPES.md](RECIPES.md).
+
+Phase 6 exports the complete selection with only approved text overlays and optionally
+compatible valid date interpretations. Source tokens remain literal text, preserving
+exact digits; ISO date text is explicit. Full raw evidence, every step decision and
+the replayable histories are retained in workbook sheets. Chunked canonical JSON
+preserves values too large for one audit cell. Existing targets, source workbooks and
+intake copies cannot be overwritten. Complete recipe histories and matching original
+date evidence are required. See [TEXT_EXPORT.md](TEXT_EXPORT.md).
+
 - Identifiers remain text, including leading zeros and long digit strings.
 - Missing, blank, invalid, unreadable, and numeric zero remain distinct.
 - Preserve raw text before parsing. Any parse failure produces a typed status and a finding.
@@ -39,5 +81,14 @@ Rules need a stable ID, version, description, required fields, applicability, ch
 Keep error origin separate from operational action. Source-data, interpretation, extraction, normalization, validation, and export failures can have different severities and require different responses. Cross-field checks apply only when field definitions and populations are comparable.
 
 ## Evaluation
+
+Entity relationships carry their source population hash, exact selected borrower
+features, raw mapped evidence, optional reviewed text parent, exclusions, all labels,
+blocked candidate pairs, grouping threshold, model/dependency provenance and explicit
+group decisions. Borrower identifiers compare as literal text only. Training labels
+and candidate approval are separate review stages; contradictory distinct-borrower
+labels prevent group approval. Unclustered rows are unclassified. Accepted
+same-borrower relationships never merge, delete or rewrite loan rows. Source, mapping
+or saved-scope drift blocks publication. See [ENTITY_MATCHING.md](ENTITY_MATCHING.md).
 
 Review ground truth independently of rule output. Keep development and holdout sets separate, including source-layout diversity. Sample passing records as well as findings. Record anticipated/detected, anticipated/missed, new, false-positive, and untestable outcomes against an immutable taxonomy version. Synthetic test success is not measured real-corpus coverage.

@@ -2,6 +2,38 @@
 
 ## Current implementation
 
+Canonicalization Phase 8 adds `source_records.py` for bounded complete CSV reads
+and protected XML group reads; `source_adapters.py` for saved native scopes,
+explicit dictionary definitions and guarded use of the shared transformation
+engine; and `source_adapter_ui.py` for native setup, mapping and manual review.
+CSV metadata never masquerades as an Excel sheet/range. XML retains expanded group
+paths and namespace evidence. `ColumnDefinitionWindow` accepts an explicit
+adapter persistence context while preserving its existing Excel callers.
+`workspace_reset.py` removes source-adapter settings after worker shutdown.
+`smoke_source_adapters.py` exercises both formats from the installed wheel.
+See [CSV/XML text review](SOURCE_ADAPTERS.md) for contracts and supported boundaries.
+
+Canonicalization Phase 7 adds `entities.py` for immutable borrower populations,
+explicit pair labels and group decisions; `entity_matching.py` for current-source
+guards, bounded owned-worker execution and atomic JSON/model publication;
+`entity_worker.py` for the isolated Dedupe runtime; and `entity_ui.py` for native
+feature/pair/group review. The engine worker is invoked by file path from the
+installed application and imports Dedupe only in `.tools/entity-matching/`.
+Normal app imports do not require Dedupe. The worker verifies the validated package
+inventory, trains a fresh model and records its full provenance. No user-supplied
+model is deserialized. Matching never mutates transformation or loan rows.
+Shutdown now waits for the owned job's active-process count to reach zero, including
+Windows Python launcher descendants, before temporary files are removed. This uses
+Microsoft's [job accounting](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_accounting_information)
+after job termination; it does not terminate processes by image name.
+Temporary-directory cleanup retries Windows sharing/lock violations for at most
+five seconds without changing permissions. Persistent locks and other permission
+errors fail visibly and retain the affected directory for diagnosis.
+`workspace_reset.py` removes source-bound model/run files after owned workers stop.
+`scripts/setup_entity_matching.py` prepares the optional runtime with an explicit
+checksum-pinned portable compiler; `check.py --entity-smoke` exercises the actual
+path from an installed wheel. See [ENTITY_MATCHING.md](ENTITY_MATCHING.md).
+
 The user interface calls saved analysis selections **data sets**. Existing `SavedTable`/`TableSelections` types and persisted schema keys remain compatible; user-saved names are preserved. This terminology does not create or modify Excel table objects. New default names use Data set N.
 
 An installable Python package exposes the CLI and a native Tkinter/ttk window for file intake.
@@ -38,7 +70,7 @@ An installable Python package exposes the CLI and a native Tkinter/ttk window fo
 - `inputs/<id>/` contains each unmodified session working copy and `manifest.json`. Schema 2 includes `original_path`; schema 1 records from the earlier browser UI remain readable with that field null. Listing checks record structure and saved-source existence/size, not a fresh content hash. `IntakeStore.clear` removes only validated application record directories and leaves unrelated files in a caller-supplied storage folder untouched.
 - `scripts/launch_desktop.py` runs in the project-local `pythonw.exe` and sets the working directory to the project before calling the CLI. `scripts/create_launcher.py` creates the per-user Loan Tape desktop shortcut with an explicit runtime/launcher path and working directory; it refuses to overwrite an unrelated shortcut. `create-launcher.bat` recreates it, and `start-ui.bat` uses the same windowless entry point. CLI `--ui` remains supported. No installer, Registry modification, PATH change, browser, or local server is introduced.
 
-The intake boundary accepts extensions .csv/.xml/.xlsx/.xls/.xlsm/.xlsb and files up to 100 MiB, without interpreting their contents. Explicit UNC/network and Windows device source paths are rejected before filesystem access. Normal local changes during copying are detected; this is not an adversarial file-locking or tamper-proof archive guarantee. Workbook location discovery and bounded preview readers are implemented; there are no normalization/validation adapters, database, or external integrations yet.
+The intake boundary accepts extensions .csv/.xml/.xlsx/.xls/.xlsm/.xlsb and files up to 100 MiB, without interpreting their contents. Explicit UNC/network and Windows device source paths are rejected before filesystem access. Normal local changes during copying are detected; this is not an adversarial file-locking or tamper-proof archive guarantee. Downstream services provide workbook discovery, column checks, date interpretation and reviewed text transformations through explicit source adapters. General financial normalization and external service integrations remain future work.
 
 ## XML stages 1–4
 
@@ -194,7 +226,153 @@ The desktop follows FinExtract's Tkinter/ttk, native-drop, and main-thread/worke
 
 ## Runtime and dependencies
 
-Python 3.12 with Tcl/Tk is the desktop baseline. `uv.lock` records tkinterdnd2, openpyxl, defusedxml, Windows-only xlwings/pywin32, their transitive dependencies, and development tooling. Windows is the initial local development target. CI is configured for Windows and Linux; successful execution on each system must be established separately.
+### Canonicalization Phase 1
+
+`scripts/probe_canonicalization.py` orchestrates optional compatibility checks in
+separate `.tools/canonicalization-probe/` and
+`.tools/canonicalization-dedupe-probe/` environments, using the root `uv.lock` and
+explicit dependency groups. Normal setup installs neither group. The probes
+co-install the application runtime requirements without installing the application,
+run synthetic cases through `_canonicalization_cases.py`, record package/license
+metadata, and compare the ordinary `.venv/` package inventory before and after.
+Failures remain nonzero with per-profile evidence; Dedupe source builds require an
+explicit probe flag and do not install host tools.
+
+The reviewed future contract keeps engine-neutral processing separate from native
+UI, original evidence, dictionary meanings, staged derived results and exports.
+ftfy supplies Phase 3 proposals; RapidFuzz supplies Phase 4 suggestions. Exact approved rules belong to
+Loan Tape because the evaluated DataPatch API strips whitespace. No Node/Java
+service or sibling workspace becomes a runtime requirement. See
+[Canonicalization integration](CANONICALIZATION.md) for decisions and boundaries.
+
+### Canonicalization Phase 2
+
+`transformations.py` supplies immutable canonical JSON snapshots, full-population
+cell decisions, operation metadata, explicit approvals and derived revision history.
+It verifies parent histories and previews by deterministic replay, retains every
+mapped cell and checks actual serialized payload sizes. Engine proposals are literal
+data; cleanup engines and UI remain separate. Eligible changes affect only mapped
+free-text cells and cannot reinterpret missingness or identifiers. Phase 4 adds
+category eligibility only under its versioned exact-rule policy and frozen code list.
+
+`transformation_excel.py` adapts the existing raw OOXML evidence reader, checking
+the saved selection, active dictionary snapshots and duplicate/blank header evidence.
+Publication re-reads current inputs, stages a full revision, checks the source hash
+again and uses no-replace atomic hard-link publication. Session records live under
+`.artifacts/transformations/`; `workspace_reset.py` removes only validated filenames
+belonging to preserved intake sources after workers stop. Loading requires the source
+and current mappings, then verifies the complete revision by replay. The Phase 3
+desktop adapter calls these APIs. The foundation's installed-wheel smoke test executes the synthetic
+read/preview/approve/publish/reload/reset path without the optional probe engines.
+
+### Canonicalization Phase 3
+
+`text_cleanup.py` pins ftfy 6.3.1 and every effective setting, proposes repairs for
+one explicitly mapped text column and records engine/configuration evidence.
+Application regenerates the exact preview with current inputs and rejects stale
+approval. A final guard checks the saved data set, mappings and active catalog
+after staging and before publication. The source hash is independently rechecked.
+The inactive `loan.text` pack supplies project-authored name definitions without
+altering pack schema or identifier semantics.
+
+`text_cleanup_ui.py` owns settings, full-population counts, paged decision review,
+explicit per-cell choices, reviewer/reason and source jumps. It uses the application's
+WorkerGroup for cancellable preview/application and orderly shutdown. Scope, mapping,
+dictionary or setting changes invalidate review. `preview_ui.py` keeps one current
+revision per data set while that preview panel remains open; **Start from source**
+clears that selection while retaining earlier session evidence. Source grid values
+remain original. Phases 5 and 6 supply persistent recipes and text-result export;
+a saved-run browser remains future work. Tests exercise the real engine, native controls and worker shutdown; a
+second installed-wheel smoke test executes actual ftfy and exact-rule application/replay.
+See [TEXT_CLEANUP.md](TEXT_CLEANUP.md).
+
+### Canonicalization Phase 4
+
+`text_rule_types.py` defines immutable literal rules and policy validation without
+importing a UI or similarity engine. `transformations.py` recognizes only the
+versioned `exact-text-rules` operation for category replacements, validates every
+target against frozen allowed values and requires complete, matching proposals on
+both initial preview and replay. Rules are simultaneous in a step. Duplicate keys,
+no-op/blank/over-limit rules and mapped missing tokens fail explicitly.
+
+`text_rules.py` executes these maps and calls pinned RapidFuzz's compiled ratio
+scorer for suggestion-only comparisons. It counts the complete current free-text
+column, caps distinct values at 10,000, compares one explicit source spelling, and
+orders candidates by score descending then literal text ascending. Optional NFC
+plus casefold affects comparison only. Every selected suggestion retains its score,
+settings, Unicode/scorer versions and snapshot/parent/corpus identities in the rule.
+
+`text_rules_ui.py` edits session drafts in the existing cleanup dialog. It has an
+owned cancellable search worker, 200-candidate pages, no preselection, exact literal
+inputs, a category allowed-value view and stale-context guards. Accepting rules
+invalidates the prior cell preview/choices; it does not run or approve a preview.
+Closing the editor discards unaccepted edits. Closing Clean text discards its rule
+draft; applied rule evidence remains in the session revision until normal Exit.
+Rules, repairs and later previews share the same source-preserving adapter and
+atomic publication guards. No persistence or export feature is added here.
+
+### Canonicalization Phase 5
+
+`recipes.py` captures reviewed operation histories as immutable, strictly validated
+JSON recipes. Portable steps retain pinned settings and literal rules but remove
+old source/approval/similarity evidence. The schema records relative mapped columns,
+literal headers and duplicate occurrences, frozen definitions and selected width.
+The source/template profile and applicability are explicit. Save publishes one
+ID/version file without replacement under `.artifacts/recipes/`; normal Exit retains
+these files. Library reading and serialized recipes have independent resource bounds.
+
+`recipe_execution.py` requires a fresh source/profile/schema binding and explicit
+context/reviewer confirmation. It adapts relative columns, starts from original
+source evidence and stages each approved step in memory. Final application re-reads
+the current source/mappings, runs every configured engine again and checks all
+approved previews before publishing one complete revision. A failed or cancelled
+step publishes no partial history. `recipe_context.py` validates per-operation
+recipe/binding attribution and complete ordered recipe histories without importing
+engines, UI or Excel export code. Persistence, export and borrower matching share
+the completion check; partial histories remain in memory during review. Later
+ordinary cleanup retains that evidence. Completed recipe archives retain the full recipe
+and binding, validated during both publication and loading.
+
+`recipe_ui.py` provides explicit capture/save/load, metadata editing, step ordering
+and compatibility confirmation. `recipe_run_ui.py` reuses the existing native cell
+review controls for each step, with fresh choices and an explicit reject-all path.
+Only a completed run replaces the owner's working result. Owned workers, source
+invalidation, cancellation and shutdown clear staged runs. Service tests, native
+workflow tests and the installed-wheel text smoke cover reuse on a new synthetic
+source, retention, complete-run publication and failure handling. See
+[Reusable cleanup recipes](RECIPES.md). Phase 6 supplies text-result export.
+
+### Canonicalization Phase 6
+
+`text_export_payload.py` replays the current approved revision, checks complete recipe
+chains and reads the entire selected range through the raw OOXML evidence reader.
+It applies only the final approved text overlay. Optional date composition requires
+the same source/selection, current dictionary snapshots, compatible shared mappings,
+matching original evidence and nonconflicting changes. The resulting workbook retains
+all selected cells, full original evidence and complete replayable text/date audit
+histories. Canonical JSON audit records use numbered chunks; payload and row bounds
+are enforced while assembling evidence and checked again before writing.
+
+`text_export.py` captures current scope/catalog, checks the selected date-run file,
+stages the output, then validates and publishes without replacing a target. Failure
+cleanup removes only the output linked by this attempt, preserving competing files.
+`text_export_excel.py` uses existing process/job launch helpers, cancellation and
+bounded shutdown. It validates every saved value/type, complete dimensions, sheet
+order, and absence of formulas, macros or external relationships. The new
+`text_export_worker.py` reuses the date writer's literal bulk-writing and formatting
+helpers in a separate owned process. Source tokens and ISO dates are literal text;
+it does not convert financial numbers or copy source workbook features.
+
+`text_export_ui.py` exposes an explicit export action for the current working result,
+an unchecked optional date-run inclusion, cancellation and manual output opening.
+Owned workers and stale context guards follow the existing desktop lifecycle.
+`check.bat --excel-smoke` adds actual text/recipe/date export, cancellation and timeout
+through the isolated installed wheel. Ordinary checks need no desktop Excel. See
+[Reviewed text export](TEXT_EXPORT.md).
+
+### Application baseline
+
+Python 3.12 with Tcl/Tk is the desktop baseline. `uv.lock` records tkinterdnd2, openpyxl, defusedxml, xmlschema, ftfy/wcwidth, RapidFuzz, Windows-only xlwings/pywin32, their transitive dependencies, and development tooling. Windows is the initial local development target. CI is configured for Windows and Linux; successful execution on each system must be established separately.
 
 The optional comparison requires locally installed desktop Excel; it does not require an add-in, xlwings PRO reader, or an LLM. `scripts/smoke_excel.py` exercises that integration explicitly; standard checks do not require Office.
 
@@ -204,4 +382,4 @@ Add further CSV and workbook tools only as their processing features are impleme
 
 Implemented date-analysis calendar screening follows the packaged [SIFMA calendar guidance](../src/loan_tape/guidance/SIFMA_CALENDAR.md). SIFMA is the sole built-in U.S. fixed-income calendar provider. Keep deterministic weekday calculation separate from versioned published holiday evidence and activity/agreement applicability. Results bind source dates to calendar versions; uncovered weekdays remain unknown and are never projected. The policy and verified schedule data are distributed as package resources. Screening is available through the date-analysis API and complete-data-set desktop workflow; the simpler one-column checks keep their prior behavior.
 
-Keep real sources and generated run data outside version control. Date runs record source hashes, schema and engine versions, dictionary/mapping/calendar snapshots, parameters, and result identities; other processing runs remain future work. A matching total alone does not prove correct row or column association. Failed or quarantined records must remain visible in reconciliation.
+Keep real sources and generated run data outside version control. Date runs record source hashes, schema and engine versions, dictionary/mapping/calendar snapshots, parameters, and result identities. Transformation revisions retain original evidence, proposals, approvals and parent histories under the Phase 2 contract. A matching total alone does not prove correct row or column association. Failed or quarantined records must remain visible in reconciliation.

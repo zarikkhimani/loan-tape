@@ -1,5 +1,12 @@
 # Release checklist
 
+For a build containing Phase 7, prepare the optional runtime with
+`dev.bat python scripts/setup_entity_matching.py --portable-compiler`, then run
+`check.bat --entity-smoke --excel-smoke`. This adds actual installed-wheel Dedupe
+execution to the normal validation. Preserve the optional runtime report and
+compiler provenance locally; do not distribute `.tools/`, models, labels or real
+portfolios. Synthetic matching checks do not establish independent accuracy.
+
 Use this checklist for a reviewed Loan Tape public alpha. Building locally is
 distinct from publishing. The source is MIT-licensed and the intended first public
 version is `0.1.0`; this does not imply a PyPI publication, production approval, or
@@ -42,6 +49,17 @@ types, tests, CLI startup, source/wheel builds, required calendar guidance, and
 distribution contents. It installs the wheel and locked runtime dependencies into
 an isolated temporary environment and exercises its CLI, intake/preview, packs, and
 date foundation. It removes those temporary build environments after verification.
+
+For Phase 6 text/recipe export, run the installed package with desktop Excel as well:
+
+```powershell
+.\check.bat --excel-smoke
+```
+
+This adds real reviewed text/recipe/date composition, exact saved-cell checks,
+retention after reset and cancellation/timeout cleanup of owned Excel processes.
+Ordinary checks retain their no-Office requirement. Source numeric tokens in this
+export are literal text, as documented in [TEXT_EXPORT.md](TEXT_EXPORT.md).
 
 Record passed/failed/skipped checks. Windows native tests require an interactive
 desktop; headless Linux UI skips must not be described as UI passes. For changes to
@@ -137,3 +155,7 @@ preserve source files and local review metadata and consider schema compatibilit
 
 The discipline follows FinExtract's release checklist while using Loan Tape's
 version metadata, lockfile, packaged SIFMA guidance, and isolated wheel checks.
+
+The full check also runs `scripts/smoke_source_adapters.py` from the installed
+wheel: synthetic CSV/XML complete scopes, mappings, actual ftfy proposals, explicit
+approval, deterministic replay, JSON audit publication and session cleanup.

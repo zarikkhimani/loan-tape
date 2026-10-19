@@ -210,7 +210,7 @@ Acceptance: native Excel/CSV/XML workflows, multi-sheet/saved-set switching and 
 
 Add an explicit **Define column** action for selected columns in saved `.xlsx`/`.xlsm` data sets. Map one source column to an active dictionary field and record its source header, expected type, currency, source/canonical units, accepted text date formats, and basic required/blank/unique/bound/missing-token rule choices. Freeze the exact dictionary version, fingerprint, field meaning, and code meanings. Keep Excel storage kinds and number formats as evidence rather than business meaning, and never write the source workbook.
 
-Acceptance: active-field selection without label inference, loan-ID/balance/date/category snapshots, required monetary currency, date-format applicability, atomic save/edit/remove/reopen, corrupt and bounded settings failures, changed data-set scope isolation, source preservation, inactive/superseded dictionary visibility, native editor behavior, quality checks, and isolated native coverage. Rule execution, CSV/XML mappings, normalization, and general user-authored cross-source profiles remain later work.
+Acceptance: active-field selection without label inference, loan-ID/balance/date/category snapshots, required monetary currency, date-format applicability, atomic save/edit/remove/reopen, corrupt and bounded settings failures, changed data-set scope isolation, source preservation, inactive/superseded dictionary visibility, native editor behavior, quality checks, and isolated native coverage. Phase 8 now supplies CSV/XML mappings. General rule execution, financial normalization and user-authored cross-source profiles remain later work.
 
 ## 0.18. Warehouse Model mapping profile (implemented)
 
@@ -234,6 +234,152 @@ strict malformed/grouping/scientific-notation handling, profile round-trips and
 fingerprints, inactive pack validation, and isolated installed-wheel smoke coverage.
 Complete-column evidence reading, mappings, population diagnostics, cross-field red
 flags, market-rate retrieval, UI, persistence and export remain later phases.
+
+## Canonicalization integration phase 1. Contract and compatibility (completed)
+
+Define the field eligibility, source/revision identity, approval, replay, exact-rule,
+resource-limit and retention requirements before adding text processing. Supply
+locked optional dependency groups and an isolated Python 3.12 compatibility runner,
+leaving normal setup and the application runtime unchanged.
+
+Acceptance: five base engine cases executed, installed dependency checks, unchanged
+ordinary environment, explicit DataPatch whitespace behavior, and separately recorded
+Dedupe installation failure. On the tested Windows machine, the Dedupe binary-only
+path lacks an affinegap wheel; a source build also requires unavailable Microsoft C++
+Build Tools. This initially gated phase 7; the portable build now resolves it. No application
+canonicalization UI or processing is claimed in phase 1.
+
+Phases 3–5 add reviewed cleanup, spelling/exact rules and reusable recipes;
+phase 6 adds validated exports.
+Phase 7 now supplies reviewed entity matching with a verified project-local runtime;
+phase 8 supplies CSV/XML adapter prerequisites. See the complete
+[contract, results and phase sequence](CANONICALIZATION.md).
+
+## Canonicalization integration phase 2. Transformation foundation (completed)
+
+Python-only immutable source snapshots, full-population previews, explicit cell
+approvals and staged derived revisions now support the later engine/UI adapters.
+The Excel adapter checks current source hashes, selections, literal headers and
+active dictionary snapshots. Every mapped cell has an outcome; identifiers, numbers,
+dates, categories, formulas, errors and missing states remain excluded from cleanup.
+Approved changes retain original evidence, parent revisions and intermediate values.
+
+Acceptance covers source preservation, duplicate headers, blank/gap/tail populations,
+literal identifiers and numeric tokens, stale approvals and parent histories,
+resource limits, cancellation, publication failures, deterministic replay and normal
+session cleanup. The end-to-end path also runs from the installed wheel. No cleanup
+engine, desktop control, recipe persistence or text export is implemented in this phase.
+
+## Canonicalization integration phase 3. Reviewed text cleanup (completed)
+
+The Excel **Clean text** dialog now proposes ftfy 6.3.1 repairs for a saved data set's
+explicitly mapped free-text column. Every setting is pinned; Unicode NFC is opt-in.
+The inactive `loan.text` dictionary supplies borrower/facility name meanings.
+Complete mapped-cell reconciliation, paged proposals, full details and source jumps
+support explicit per-cell inclusion and reviewer/justification. Application rechecks
+source, scope, mappings, dictionaries and engine output before creating a separate
+session revision. Source workbooks and current date exports remain unchanged.
+
+Acceptance covers actual engine output and conservative conventions, original bytes,
+excluded identifiers/source states, optional NFC, stale inputs including staging-time
+changes, repeated reviewed steps, cancellation, native multi-page controls, source
+navigation, invalidation and shutdown, and an installed-wheel engine smoke test.
+Phases 4–6 supply spelling/exact rules, persistent recipes and text exports.
+Phases 7 and 8 now supply borrower relationship review and CSV/XML adapters respectively.
+See [TEXT_CLEANUP.md](TEXT_CLEANUP.md).
+
+## Canonicalization integration phase 4. Spelling suggestions and exact rules (completed)
+
+**Clean text → Exact replacements → Edit rules / spelling** offers explicit source
+queries, pinned RapidFuzz comparison, paged candidates and manual literal rules.
+Candidates come from the same mapped free-text column's current eligible values.
+Category fields accept exact rules only, with replacements restricted to their
+frozen allowed-value lists. Duplicate keys and missing-token reinterpretation fail.
+Rule drafts require a separate full-population preview and explicit cell approval.
+Applied history records rule text and selected suggestion evidence; replay verifies
+the literal executor, and later steps consume only approved prior values.
+
+Acceptance covers real scores, deterministic ordering, comparison-only NFC/casefold,
+literal whitespace/Unicode, simultaneous rules, category policy, limits, stale
+source/mapping/catalog/rule guards, cancellation, native paging and session shutdown.
+The installed-wheel workflow now exercises actual spelling search, reviewed exact
+application and replay after ftfy. Originals stay unchanged; Phase 5 supplies saved
+recipes and Phase 6 adds text-refined exports.
+
+## Canonicalization integration phase 5. Reusable recipes (completed)
+
+**Clean text → Recipes** captures reviewed working steps into versioned, data-only
+recipes. Users explicitly save/load immutable ID/version files, edit profile/context
+metadata and reorder/remove steps. Saved recipes retain literal rules and pinned
+settings; reuse requires a fresh compatible field-schema binding, current reporting
+context, explicit confirmation and new cell approvals. Relative columns permit
+compatible ranges on a new source without inferring mappings or field meanings.
+
+Each run starts from source, stages earlier approvals in memory and publishes one
+complete revision only after every engine/preview/input guard passes. Failure,
+cancellation or changed inputs discard staged history and retain the prior working
+result. Saved recipe files survive Exit; source-bound results retain normal session
+cleanup. Source workbooks stay unchanged; Phase 6 supplies text-result exports.
+
+Acceptance covers cross-source and shifted-range reuse, version collisions, strict
+supported operations, tampered files, schema/profile incompatibility, step ordering,
+fresh approvals, replay, cancellation and publication failures. Native tests exercise
+save/load, review, discard, stale inputs and worker shutdown. The installed-wheel
+smoke executes a saved recipe on a second synthetic workbook and verifies retention.
+See [Reusable cleanup recipes](RECIPES.md).
+
+## Canonicalization integration phase 6. Export and first-release preparation (implemented)
+
+**Clean text → Export reviewed result...** writes a new complete-data-set workbook
+through owned xlwings/Excel processes. Approved text values and explicitly included
+compatible valid date results overlay original coordinates. Source tokens, numeric
+tokens and ISO dates remain literal text. Original evidence, all step decisions,
+approvals, rule/engine snapshots, recipe bindings and date audit histories remain
+inspectable. Neither source workbooks nor existing output targets are overwritten.
+
+Acceptance covers source/selection/mapping/evidence compatibility, complete recipe
+chains, complete populations and blank tails, literal identifiers/formulas, rejected
+changes, output tampering, size limits, cancellation, stale inputs and target races.
+Native controls explicitly choose date inclusion and wait for owned-worker shutdown.
+The installed-wheel Excel smoke checks actual saved values, recipe/date composition,
+source preservation, output retention, cancellation/timeout and process cleanup.
+See [Reviewed text export](TEXT_EXPORT.md). Hosted CI and public publication require
+their separate release steps; local checks do not imply either has occurred.
+
+## Canonicalization integration phase 7. Reviewed borrower matching (implemented)
+
+The optional Dedupe 3.0.3 runtime builds its missing Windows/Python 3.12 dependencies
+using a pinned portable compiler under `.tools/`. The normal application environment
+stays separate. **Match borrowers** uses explicitly selected mapped borrower fields,
+reviewed training pairs and manual candidate-group decisions. Complete mapped
+evidence, exclusions, labels, candidate pairs, settings, model hashes, decisions and
+accepted relationships export to a new JSON audit. Every source row is preserved.
+
+Validation covers actual Dedupe execution, model reload in setup, source bytes,
+literal identifiers, stale scope/mappings, contradictory labels, no-overwrite atomic
+publication, native controls, cancellation/timeout/reset and installed-wheel execution.
+The bounded feature supports at most 500 selected Excel data rows. Independent
+accuracy evaluation awaits a separately reviewed holdout corpus; Linux/hosted CI,
+large populations and CSV/XML matching remain unverified or unimplemented.
+See [Borrower relationships](ENTITY_MATCHING.md).
+
+## Canonicalization integration phase 8. CSV/XML adapters (implemented)
+
+Complete whole-file CSV scopes require explicit encoding, separator and header
+conventions. Existing saved XML groups retain their original boundaries. Both
+formats now support explicit dictionary field mappings and share the existing
+text proposal, approval, reconciliation and replay contracts. The native adapter
+dialog provides complete source/decision paging, repair/NFC, exact replacements,
+source details, explicit choices and new-file JSON audits. No source is rewritten.
+
+CSV record/field and physical-line evidence, duplicate headers, ragged/empty
+records, XML namespace/node paths and distinct absent/empty/nil states remain
+inspectable. Source, mapping and dictionary changes invalidate application.
+Validation covers actual engines, stale inputs, malformed trailing content,
+publication races, native workflows, cancellation/reset and installed-wheel use.
+Recipes, matching, financial date/rate workflows and workbook export remain on
+their existing Excel paths. Transformed CSV/XML file exports and CSV
+Inspect/Check/Order integration remain separate work. See [SOURCE_ADAPTERS.md](SOURCE_ADAPTERS.md).
 
 ## 1. Source preservation and CSV workflow
 

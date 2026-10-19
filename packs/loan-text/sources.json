@@ -1,0 +1,14 @@
+[
+  {
+    "id": "project.text.fields",
+    "title": "Loan Tape text field definitions",
+    "version": "1.0.0",
+    "uri": "project:docs/TEXT_CLEANUP.md"
+  },
+  {
+    "id": "project.entity.fields",
+    "title": "Loan Tape borrower relationship definitions",
+    "version": "1.0.0",
+    "uri": "project:docs/ENTITY_MATCHING.md"
+  }
+]

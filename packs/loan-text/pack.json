@@ -1,0 +1,8 @@
+{
+  "format_version": 1,
+  "id": "loan.text",
+  "version": "1.1.0",
+  "name": "Loan text field definitions",
+  "description": "Project-authored borrower and facility meanings for reviewed text cleanup and borrower relationship review. Activate and map explicitly; names and shared addresses do not establish identity.",
+  "asset_classes": ["loans"]
+}

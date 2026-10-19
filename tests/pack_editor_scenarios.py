@@ -8,6 +8,7 @@ import tkinter as tk
 from pathlib import Path
 from threading import Event
 from unittest.mock import patch
+from weakref import ref
 
 from loan_tape.intake import IntakeStore
 from loan_tape.pack_authoring import save_draft
@@ -110,8 +111,10 @@ def run(scenario):
             manager.activate_button.invoke()
             wait(root, lambda: manager.busy)
             assert store.pins()[0].fingerprint == updated.fingerprint
+            retired_editor = ref(editor)
             manager.edit_button.invoke()
             editor = manager.editor
+            assert retired_editor() is None, "Closed Tk editor retained a reference cycle"
             editor.remove_button.invoke()
             saved(root, manager, editor)
             assert len(store.available_pack(base.id).fields) == 4

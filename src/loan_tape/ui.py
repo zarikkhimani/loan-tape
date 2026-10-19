@@ -29,7 +29,7 @@ FORMAT_CAPABILITIES = {
     ".xlsx": "Full workbook review available",
     ".xlsm": "Full workbook review available",
     ".xml": "XML review and XSD validation available",
-    ".csv": "Preview only · Complete-column review unavailable",
+    ".csv": "CSV preview and complete-scope text review available",
     ".xls": "Preserved only · In-app preview unavailable",
     ".xlsb": "Preserved only · In-app preview unavailable",
 }

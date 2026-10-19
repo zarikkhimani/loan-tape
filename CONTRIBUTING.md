@@ -72,6 +72,16 @@ Tooling documentation: [uv projects and lockfiles](https://docs.astral.sh/uv/gui
 
 ## Dependencies
 
+The optional `canonicalization-probe` and `canonicalization-dedupe-probe` groups are
+optional research tooling, separate from default development setup. ftfy 6.3.1 and
+RapidFuzz 3.14.6 are also selected runtime dependencies for Phases 3 and 4. Run
+`dev.bat python scripts/probe_canonicalization.py` to reproduce the binary-only
+checks in separate project-local environments. An explicit `--dedupe-source-build`
+attempt uses already installed build tools and never installs host software.
+Per-profile logs and reports remain under ignored `.artifacts/`; a blocked candidate
+returns nonzero. See [the integration guide](docs/CANONICALIZATION.md) before using
+these probes or claiming runtime/matching coverage.
+
 Runtime dependencies belong in `[project.dependencies]`; development tools belong in `[dependency-groups].dev`. Use the pinned local uv executable to update `uv.lock`, then run setup and checks. Do not hand-edit the lockfile.
 
 ```powershell
@@ -103,6 +113,21 @@ meaningful behavior changes. Contributors should push to their own fork and open
 pull request; do not push directly to `main` or change repository settings.
 
 Tests must use synthetic data and check behavior or data preservation. Record the purpose of future fixtures. Include expected findings and expected clean cases when adding validation rules. A taxonomy finding needs evidence of its origin and applicability.
+
+For reusable cleanup recipes, preserve explicit save/load and fresh source/schema
+binding. Regression coverage must exercise new-source reuse, cell approvals,
+failure before complete-run publication, original-byte preservation and retained
+recipe files after session reset. Native workflow tests use the existing owned
+worker group; the installed-wheel text smoke executes the actual recipe runner.
+See [the recipe guide](docs/RECIPES.md) for current behavior and limits.
+
+For reviewed text export, use `check.bat --excel-smoke` on Windows with desktop
+Excel to exercise the installed-wheel writer and owned process cancellation/timeout.
+Ordinary checks still work without Office. Keep original numeric tokens and
+identifiers literal, require compatible evidence before composing date runs, and
+verify every saved value/type before publishing a new output. Synthetic openpyxl
+fixtures are tests only; application exports use xlwings. See
+[TEXT_EXPORT.md](docs/TEXT_EXPORT.md).
 
 ## Release readiness
 

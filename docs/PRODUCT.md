@@ -8,9 +8,18 @@ The intended outputs are normalized position data with full source traceability 
 
 ## Input scope
 
+Optional **Match borrowers** now supports saved Excel data sets of 2–500 rows.
+Analysts explicitly choose borrower fields, label representative pairs, train a
+local Dedupe model, review every proposed group and save a separate JSON audit.
+The workflow keeps each loan/facility/tranche/position/reporting row unchanged and
+accounts for excluded and unclustered rows. It has no independent matching-accuracy
+claim and requires the separately verified project-local Windows/Python 3.12 runtime.
+Relationships are not incorporated into existing Excel exports. See
+[Borrower relationships](ENTITY_MATCHING.md).
+
 The application starts with supplied CSV files, XML data files, or Excel workbooks. PDF extraction and conversion functionality already exists separately and will be integrated in a later, separate phase. PDF/OCR processing and scanned-document handling remain outside the current implementation scope. Incoming spreadsheets may still contain structural, semantic, or upstream conversion errors; their values and layouts require inspection.
 
-File intake currently accepts .csv, .xml, .xlsx, .xls, .xlsm, and .xlsb by filename extension and preserves their bytes. Intake itself does not inspect content or establish workbook validity. Files labels the selected format's capability before opening: full workbook review for .xlsx/.xlsm, XML review and XSD validation for .xml, preview-only behavior for CSV, and preservation only for .xls/.xlsb. The .xls and .xlsb preview action stays disabled because those readers remain unimplemented.
+File intake currently accepts .csv, .xml, .xlsx, .xls, .xlsm, and .xlsb by filename extension and preserves their bytes. Intake itself does not inspect content or establish workbook validity. Files labels the selected format's capability before opening: full workbook review for .xlsx/.xlsm, XML review and XSD validation for .xml, preview and complete-scope text review for CSV, and preservation only for .xls/.xlsb. The .xls and .xlsb preview action stays disabled because those readers remain unimplemented.
 
 ## Current file intake
 
@@ -22,7 +31,7 @@ The Open file action scans every worksheet's physical cells to discover stored d
 
 Users can preview all data on a sheet or an arbitrary cell range, navigate row/column pages, and jump to source cells. The 20-row/10-column page size never limits workbook discovery or the saved selection. Users can save multiple named data sets, each with a complete worksheet range and optional original header row, bound to the workbook's content hash and restored when the working copy is reopened during the same application session. Data sets may sit beside or below one another on a sheet. Select a preview row and use it as headers, or enter its source row number; save and revise each data set independently. The preview shows these labels alongside Excel column letters even when the header row is off-page. Duplicate/blank headers and the source header row remain intact. Removing a data set removes only its local definition; normal application exit removes all file-session definitions. Earlier single-range settings remain compatible until that reset. The first view previews the largest suggested data set on the first populated readable sheet, falling back to all stored data bounds when no data set is identified. Suggestions remain unsaved drafts; existing saved definitions retain priority. No analysis runs automatically.
 
-CSV retains its bounded initial preview and separator/encoding controls. Excel shows stored values and saved formula results (formula text when no cached value exists); formatting is not reproduced and formulas are never recalculated. Saved data sets support an Inspect column action over every selected data row, with counts by stored type, blanks/empty text, zeroes, repetition counts, and source-linked examples. Headers and earlier title rows are excluded only when explicitly designated; without a header all range rows are included. The explicit date workflow is the only implemented complete-data-set financial-field interpretation, red-flag, and export path. Its Excel output contains the complete saved data-set range in source column order, replaces only successfully interpreted mapped dates, retains unresolved values literally, and adds review/audit sheets. A separate Phase 1 rate backend defines fields and parses individual values but does not yet map or analyze a pool. Broader normalization, validation, and export remain future work. Location discovery does not establish correctness of every source value or satisfy the later raw-evidence processing milestones.
+CSV retains its bounded initial preview and separator/encoding controls. The separate **CSV / XML text review...** dialog adds complete saved CSV scopes with explicit conventions, native field mappings, full-record paging, reviewed repair/NFC and exact replacements, and JSON audits. The same workflow accepts existing saved XML groups. See [SOURCE_ADAPTERS.md](SOURCE_ADAPTERS.md). Excel shows stored values and saved formula results (formula text when no cached value exists); formatting is not reproduced and formulas are never recalculated. Saved data sets support an Inspect column action over every selected data row, with counts by stored type, blanks/empty text, zeroes, repetition counts, and source-linked examples. Headers and earlier title rows are excluded only when explicitly designated; without a header all range rows are included. The explicit date workflow is the only implemented complete-data-set financial-field interpretation, red-flag, and export path. Its Excel output contains the complete saved data-set range in source column order, replaces only successfully interpreted mapped dates, retains unresolved values literally, and adds review/audit sheets. A separate Phase 1 rate backend defines fields and parses individual values but does not yet map or analyze a pool. Broader normalization, validation, and export remain future work. Location discovery does not establish correctness of every source value or satisfy the later raw-evidence processing milestones.
 
 On Windows with installed desktop Excel, inspection also runs xlwings alongside openpyxl and offers a reader selector and preview-only value comparison. Differences are for review, never automatic correction. Only plain data workbooks qualify for Excel comparison: formulas, named definitions, macros, links, connections, tables, and unrecognized package features are explicitly skipped before Excel starts. The openpyxl preview remains available. This workflow runs locally in Python without an LLM or add-in.
 
@@ -64,7 +73,7 @@ The native main window contains a permanent Files tab plus an analysis/preview t
 
 Drop feedback is shown on Files even when a file was dropped over the preview. The optional workbook-details dialog hides/restores with its owning tab. Column tools remain dialogs. Tab close cancels only that preview's owned work, preserving active intake copies and leaving the app able to open another preview. Main-window shutdown retains full worker cleanup.
 
-Order uses the explicit saved Excel/XML data set and column selected on the analysis tab. It reads and retains the complete saved row-and-column population in bounded temporary SQLite storage; the selected column is only the order key. The display pages through 50 ordered source rows and 10 source columns independently, keeping every cell attached to its original row. A–Z/Z–A apply case-insensitive textual order with exact text as a tie-breaker. Ascending/Descending put stored Excel numbers first in numeric order; they do not parse XML text or text-formatted identifiers as numbers. Other filled order values remain visible and missing order states stay last. Jump to source returns to the original row and selected column. Ordering never writes or rearranges the source, and CSV ordering remains unavailable until CSV has a saved complete-data-set scope.
+Order uses the explicit saved Excel/XML data set and column selected on the analysis tab. It reads and retains the complete saved row-and-column population in bounded temporary SQLite storage; the selected column is only the order key. The display pages through 50 ordered source rows and 10 source columns independently, keeping every cell attached to its original row. A–Z/Z–A apply case-insensitive textual order with exact text as a tie-breaker. Ascending/Descending put stored Excel numbers first in numeric order; they do not parse XML text or text-formatted identifiers as numbers. Other filled order values remain visible and missing order states stay last. Jump to source returns to the original row and selected column. Ordering never writes or rearranges the source, and CSV ordering remains unavailable; the Phase 8 CSV scope is currently used by the separate text-review workflow.
 
 A data set is an application selection of existing source cells, not a newly created Excel table. Saving setup only stores local coordinates and header choices.
 
@@ -94,7 +103,7 @@ For a saved `.xlsx` or `.xlsm` data set, the user selects one source column and 
 
 Settings are local, atomic JSON under `.artifacts/column-definitions/`. They are bound to the source SHA-256, stable data-set identity, exact sheet/range/header scope, and source column. The exact dictionary pack version/fingerprint and field/code meanings are embedded, so later pack edits or deactivation cannot rewrite the saved meaning. A changed data-set scope does not silently inherit definitions from the earlier scope. Source files and intake copies remain unchanged.
 
-Excel cell storage kinds and number formats are retained as evidence but never establish whether a column is a loan identifier, balance, maturity date, or another business concept. Saving a definition does not inspect every value, execute the recorded rules, normalize values, or establish financial validity. Those checks remain a downstream analysis milestone. CSV/XML definitions are not included in this slice.
+Excel cell storage kinds and number formats are retained as evidence but never establish whether a column is a loan identifier, balance, maturity date, or another business concept. Saving a definition does not inspect every value, execute the recorded rules, normalize values, or establish financial validity. Date and reviewed text workflows use these definitions explicitly; general rule execution remains future work. CSV/XML mappings use their native scopes through the separate [text review adapter](SOURCE_ADAPTERS.md).
 
 ## Warehouse Model mapping profile
 
@@ -143,7 +152,7 @@ and unknown calendar coverage remain distinct. See
 
 ## User workflow
 
-1. Select a local CSV file or Excel workbook and record its identity and reporting context.
+1. Select a local CSV file, XML data file or Excel workbook and record its identity and reporting context.
 2. Inspect source structure before interpreting its fields.
 3. Review or supply field definitions and mappings.
 4. Normalize supported values and surface ambiguity.
@@ -153,6 +162,39 @@ and unknown calendar coverage remain distinct. See
 
 The taxonomy evaluation workflow additionally compares findings against independently reviewed ground truth, including sampled passing records.
 
+## Reviewed text cleanup and canonicalization
+
+Phase 1 defines a reviewed-text integration contract and supplies optional, isolated
+Python 3.12 compatibility probes. ftfy supplies Phase 3 text repair and RapidFuzz
+supplies Phase 4 spelling suggestions. Approved replacements use exact literal maps;
+the evaluated DataPatch API trims whitespace even with normalization disabled.
+Dedupe's initial native-build blocker is resolved by Phase 7's pinned portable
+toolchain and separately verified optional runtime. Phase 2 adds an engine-neutral transformation foundation:
+complete source evidence, full-population previews, explicit approvals, immutable
+derived revisions, replay and atomic session storage. It changes no workbook and
+adds no runtime dependency by itself. Phase 3 adds **Clean text** in the Excel
+preview, with ftfy 6.3.1, explicit free-text mappings, optional NFC, complete-population
+proposals, per-cell approval, reviewer/reason and source jumps. Changes apply only
+to separate session results; missing states and excluded fields stay unchanged.
+The inactive `loan.text` pack supplies borrower/facility name meanings. Existing
+date exports do not include these text changes. Phase 4 adds a session rule editor,
+bounded spelling comparison for free text, and exact replacements for free text or
+categories with frozen allowed values. Suggestions never select rules or change cells
+automatically. Phase 5 adds explicit persistent recipes, source/template and frozen
+schema binding, ordered fresh cell review and complete-run publication. Loading
+never runs transformations; saved recipes survive Exit and approvals do not transfer
+to another source. Phase 6 adds **Export reviewed result...** with the complete
+selection, original evidence, step decisions and audit history. It can explicitly
+compose a compatible date run. A hidden owned xlwings process writes a new workbook;
+saved-file and fresh-input checks gate publication. Numeric source tokens and ISO
+dates remain literal text, with no inferred numeric normalization. Phases 7 and 8
+now supply borrower matching and CSV/XML text adapters respectively. See
+[Reviewed text export](TEXT_EXPORT.md),
+[Reusable cleanup recipes](RECIPES.md),
+[Reviewed text cleanup](TEXT_CLEANUP.md) for controls and retention, and
+[Canonicalization integration](CANONICALIZATION.md) for scope, evidence,
+limits, component decisions, and the eight delivery phases.
+
 ## First processing milestone
 
 Use one documented synthetic CSV format and an explicit mapping profile. Preserve raw records and column positions; do not infer field meaning from labels alone. Produce normalized positions, lineage, findings, transformations, and reconciliation for a limited, documented field set.
@@ -161,7 +203,7 @@ Acceptance requires unchanged source bytes, traceability for each normalized fie
 
 ## Later scope
 
-Workbook inspection and reconstruction follow the first CSV workflow. Both input paths share mapping, normalization, validation, and reconciliation. A review workbook and UI should expose source evidence, open findings, and recorded decisions. Corpus evaluation covers supplied CSV and Excel files and does not depend on a PDF/OCR milestone.
+Workbook inspection, column review, date analysis and reviewed text workflows are implemented within their documented limits. Future work extends financial normalization, cross-field validation and reconciliation across the supported source formats. Review outputs must retain source evidence, open findings and recorded decisions. Corpus evaluation covers supplied CSV and Excel files and does not depend on a PDF/OCR milestone.
 
 Production hosting, automated credit decisions, and performance claims about the real research corpus are outside the foundation milestone. The corpus is maintained separately and was not supplied with the handoff.
 

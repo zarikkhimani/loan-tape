@@ -16,14 +16,15 @@ review and the checks to apply; ambiguous values remain visible for review.
 
 ## Start here
 
-The Windows desktop application is the simplest way to evaluate the project.
+Windows is the primary desktop platform. Use it for the complete workflow,
+including exports through desktop Microsoft Excel.
 
 ### Requirements
 
 - Windows and Python **3.12**, including Tcl/Tk for the desktop interface.
 - Internet access for the first installation.
 - A local file containing synthetic data for your first review.
-- Desktop Microsoft Excel **only for date-workflow exports and optional Excel
+- Desktop Microsoft Excel **only for workbook exports and optional Excel
   integration**. Basic in-app inspection does not require Excel.
 
 ### Install and run
@@ -53,7 +54,7 @@ Use a synthetic `.xlsx` file for the complete introductory workflow.
    values, or **Check column** to test an expectation you choose. Review findings
    and use **Jump to cell** to inspect their source.
 5. Finish with **Exit**. Normal exit clears temporary working copies and session
-   analysis. Your originals, explicit exports, and dictionary packs remain.
+   analysis. Your originals, explicit exports, saved recipes, and dictionary packs remain.
 
 A saved data set is the full selection to review; the preview shows only a page.
 For XML steps, date exports, and detailed controls, see the [User guide](docs/USER_GUIDE.md).
@@ -62,19 +63,46 @@ For XML steps, date exports, and detailed controls, see the [User guide](docs/US
 
 | File | Available in 0.1.0 |
 | --- | --- |
-| Excel `.xlsx`, `.xlsm` | Worksheet navigation, saved data sets, complete-column inspection and checks, ordering, and date review/export. Source macros and formulas are not executed by in-app readers. |
-| XML `.xml` | Record-group navigation, saved data sets, complete-column inspection and checks, ordering, and optional validation against a local XSD schema. |
-| CSV `.csv` | Initial preview with separator and encoding controls. Saved data sets and complete-column checks are not yet available. |
+| Excel `.xlsx`, `.xlsm` | Worksheet navigation, saved data sets, complete-column inspection and checks, ordering, reviewed text cleanup/recipes/export, and date review/export. Source macros and formulas are not executed by in-app readers. |
+| XML `.xml` | Record-group navigation, saved data sets, complete-column inspection and checks, ordering, reviewed text cleanup with explicit mappings, and optional local XSD validation. |
+| CSV `.csv` | Initial preview plus complete saved scopes, explicit field mappings and reviewed text repair/exact replacements in CSV / XML text review. Inspect/Check/Order remain unavailable. |
 | Excel `.xls`, `.xlsb` | Temporary working-copy preservation only. Supply a separate `.xlsx` copy for in-app review. |
 
 Files must be local and no larger than **100 MiB**. PDF and OCR are not supported
 in this release. The Files screen shows the selected format's available actions.
+
+**CSV / XML text review...** adds complete source scopes, explicit dictionary mappings,
+reviewed text changes and separate JSON audits. See [CSV/XML text review](docs/SOURCE_ADAPTERS.md).
 
 ## Review results and Excel output
 
 **Inspect column** summarizes every data row in a saved Excel or XML selection.
 **Check column** flags values against your chosen Identifier, Text, Number, or Date
 expectation. Findings retain source locations; a flag calls for review.
+
+**Clean text** previews garbled-character repairs, optional Unicode normalization,
+spelling suggestions and exact replacements for an explicitly mapped column.
+Spelling search accepts free text; category replacements require allowed values.
+You choose each change, provide a reviewer
+and reason, and apply it to a separate session result. Activate the supplied **Loan
+text field definitions** dictionary and use **Define column** first. See
+[Reviewed text cleanup](docs/TEXT_CLEANUP.md).
+
+**Clean text → Recipes** saves ordered cleanup settings and literal rules for reuse.
+Loading requires a fresh compatibility review and per-step cell approvals. Saved
+recipes survive Exit; incomplete runs publish no partial result. See
+[Reusable cleanup recipes](docs/RECIPES.md).
+
+**Match borrowers** provides optional local Dedupe training, explicit pair labeling,
+candidate-group review and a separate JSON relationship audit for saved Excel data
+sets of up to 500 rows. It preserves every loan row and requires a separately
+validated project-local runtime. See [Borrower relationships](docs/ENTITY_MATCHING.md).
+
+**Clean text → Export reviewed result...** writes the complete selection with
+approved changes, original evidence and an audit trail. You can explicitly include
+a compatible saved date run. Source tokens, including numeric tokens and identifiers,
+remain literal text; standardized dates use ISO text. The export requires desktop
+Excel and preserves originals. See [Reviewed text export](docs/TEXT_EXPORT.md).
 
 For a saved Excel data set, **Date workflow** lets you map date columns, choose
 interpretation rules, and then run a separate set of red-flag checks.
@@ -107,9 +135,15 @@ for the workflow and its limits. Other inspection/check dialogs do not yet expor
   are not implemented.
 - Saved column definitions do not yet execute a full set of portfolio rules.
   Rate parsing is currently available only through Python.
+- Spelling suggestions, reusable recipes, borrower matching and workbook exports
+  currently require saved Excel data sets. CSV/XML text review supports text
+  repair and exact replacements, with separate JSON audits.
+  Text exports retain numeric source tokens as literal text, without numeric normalization.
+  Existing date exports do not incorporate text-cleanup results.
 - XML export and PDF/OCR integration remain future work.
 - Normal exit clears working copies, saved selections, column definitions, and
-  saved date runs. Export any completed date review you need to retain.
+  saved date runs and derived text revisions. Export any completed review you
+  need to retain.
 - Forced termination can leave temporary files. If an Excel window locks a working
   copy, close it and retry **Exit**.
 - **Open in Excel** is a separate manual action: Excel uses its normal settings and
@@ -133,8 +167,13 @@ Use `.\run.bat --help` for command-line options. From a configured checkout, run
 ```
 
 This checks dependencies, formatting, types, tests, builds, and installed-package
-behavior. GitHub Actions is configured for Windows and Linux; hosted results will
-be available after the code is pushed. See [Contributing](CONTRIBUTING.md) for
+behavior. GitHub Actions runs these checks on Windows and Linux to check portability
+of the core processing. Linux is optional for development; it is not required to
+use the Windows app and does not support its desktop Excel integration.
+
+Local checks and hosted GitHub Actions are separate runs. Hosted results become
+available after a push or pull request; a local Windows pass does not establish
+that Linux or hosted checks have passed. See [Contributing](CONTRIBUTING.md) for
 development commands and Linux setup.
 
 ## Project documentation

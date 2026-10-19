@@ -58,7 +58,19 @@ def main() -> int:
         type=Path,
         help="Check one retained wheel/source archive pair only, without rerunning source checks.",
     )
+    parser.add_argument(
+        "--excel-smoke",
+        action="store_true",
+        help="Also execute the installed-wheel text/recipe/date export with desktop Excel.",
+    )
+    parser.add_argument(
+        "--entity-smoke",
+        action="store_true",
+        help="Also run actual Dedupe from the installed wheel using the verified optional runtime.",
+    )
     options = parser.parse_args()
+    if options.distributions is not None and (options.excel_smoke or options.entity_smoke):
+        parser.error("Optional runtime smoke tests require the full check, not --distributions.")
     if options.distributions is not None:
         check_distributions(options.distributions.resolve())
         print("Retained distribution checks passed; source tests were not rerun.")
@@ -122,6 +134,31 @@ def main() -> int:
         run([smoke_python, "-I", ROOT / "scripts" / "smoke_packs.py"], cwd=work)
         run([smoke_python, "-I", ROOT / "scripts" / "smoke_dates.py"], cwd=work)
         run([smoke_python, "-I", ROOT / "scripts" / "smoke_rates.py"], cwd=work)
+        run([smoke_python, "-I", ROOT / "scripts" / "smoke_transformations.py"], cwd=work)
+        run([smoke_python, "-I", ROOT / "scripts" / "smoke_text_cleanup.py"], cwd=work)
+        run([smoke_python, "-I", ROOT / "scripts" / "smoke_source_adapters.py"], cwd=work)
+        if options.entity_smoke:
+            run(
+                [
+                    smoke_python,
+                    "-I",
+                    ROOT / "scripts" / "smoke_entity_matching.py",
+                    "--runtime-root",
+                    ROOT,
+                ],
+                cwd=work,
+            )
+        if options.excel_smoke:
+            run(
+                [
+                    smoke_python,
+                    "-I",
+                    ROOT / "scripts" / "smoke_text_export.py",
+                    "--output",
+                    work / "reviewed-text.xlsx",
+                ],
+                cwd=work,
+            )
 
     print("All checks passed, including the isolated installed-wheel smoke test.")
     return 0

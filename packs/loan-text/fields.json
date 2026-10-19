@@ -1,0 +1,44 @@
+[
+  {
+    "id": "borrower_name",
+    "label": "Borrower name as supplied",
+    "definition": "Literal name supplied by the source for the borrower associated with the mapped record. This field does not certify the legal name or establish that similar names identify the same entity.",
+    "entity": "borrower",
+    "data_type": "text",
+    "aliases": ["Borrower Name"],
+    "context": ["source_borrower_role"],
+    "notes": "Map only after confirming the source role. Keep borrower IDs, guarantor names, facility names and reporting context separate. Text cleanup proposes representations; it does not merge entities or loan rows.",
+    "references": [{"source": "project.text.fields", "locator": "borrower_name"}]
+  },
+  {
+    "id": "borrower_address",
+    "label": "Borrower address as supplied",
+    "definition": "Literal source address explicitly associated with the borrower. The source role and address convention must be reviewed; a shared address alone does not establish borrower identity.",
+    "entity": "borrower",
+    "data_type": "text",
+    "aliases": ["Borrower Address"],
+    "context": ["source_borrower_role"],
+    "references": [{"source": "project.entity.fields", "locator": "borrower_address"}]
+  },
+  {
+    "id": "borrower_identifier",
+    "label": "Borrower identifier as supplied",
+    "definition": "Literal borrower identifier in an explicitly established source namespace. Preserve leading zeroes and punctuation. Never substitute a loan, facility, tranche, holding or reporting identifier.",
+    "entity": "borrower",
+    "data_type": "identifier",
+    "aliases": ["Borrower ID"],
+    "context": ["source_borrower_role", "identifier_namespace"],
+    "references": [{"source": "project.entity.fields", "locator": "borrower_identifier"}]
+  },
+  {
+    "id": "facility_name",
+    "label": "Facility name as supplied",
+    "definition": "Literal descriptive name supplied by the source for the facility associated with the mapped record. This field is separate from facility identifiers, tranche identifiers and borrower identity.",
+    "entity": "loan",
+    "data_type": "text",
+    "aliases": ["Facility Name"],
+    "context": ["source_facility_scope"],
+    "notes": "A shared facility label does not establish that loans, tranches, positions or reporting dates are interchangeable. Preserve identifiers and rows separately.",
+    "references": [{"source": "project.text.fields", "locator": "facility_name"}]
+  }
+]

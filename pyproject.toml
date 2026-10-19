@@ -13,7 +13,9 @@ license-files = ["LICENSE"]
 keywords = ["loan-tape", "credit", "private-credit", "excel", "xml", "data-quality"]
 dependencies = [
     "defusedxml>=0.7.1,<1",
+    "ftfy==6.3.1",
     "openpyxl>=3.1.5,<4",
+    "rapidfuzz==3.14.6",
     "tkinterdnd2>=0.4.2,<1",
     "xlwings>=0.33,<1; sys_platform == 'win32'",
     "xmlschema>=4.3.2,<5",
@@ -38,6 +40,26 @@ Changelog = "https://github.com/zarikkhimani/loan-tape/blob/main/CHANGELOG.md"
 Security = "https://github.com/zarikkhimani/loan-tape/security/policy"
 
 [dependency-groups]
+# Optional compatibility probes; ftfy and RapidFuzz are also application dependencies.
+canonicalization-probe = [
+  "ftfy==6.3.1",
+  "rapidfuzz==3.14.6",
+  "datapatch==1.2.4",
+  # Avoid normality 3.x's native ICU build; retain the reviewed upstream setup.
+  "normality==2.6.1",
+  "dateparser==1.4.3",
+  "pyjanitor==0.32.41",
+  "wcwidth==0.2.13",
+]
+canonicalization-dedupe-probe = [
+  { include-group = "canonicalization-probe" },
+  { include-group = "entity-matching" },
+]
+entity-matching = [
+  "dedupe==3.0.3",
+  # Dedupe 3.0.3 uses IFBucket.byValue, removed in BTrees 6.5.
+  "BTrees==6.4",
+]
 dev = [
   "mypy>=1.15,<2",
   "pytest>=8,<10",

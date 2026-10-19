@@ -11,6 +11,7 @@ from loan_tape.date_runs import MAX_RUN_BYTES
 from loan_tape.intake import IntakeStore
 
 SOURCE_BOUND_ARTIFACTS = (
+    "source-adapters",
     "column-definitions",
     "selections",
     "xml-selections",
@@ -93,6 +94,18 @@ def reset_file_session(
             runs.rmdir()
         except OSError:
             pass
+
+    for name in ("transformations", "entity-matching"):
+        transformations = _folder(root, name)
+        if transformations.exists():
+            for path in transformations.iterdir():
+                match = re.fullmatch(r"([0-9a-f]{64})-[0-9a-f]{32}\.(?:json|tmp|bin)", path.name)
+                if match is not None and match[1] in source_hashes:
+                    removed_artifacts += _unlink_regular(path)
+            try:
+                transformations.rmdir()
+            except OSError:
+                pass
 
     sessions = _folder(root, "sessions")
     removed_artifacts += _unlink_regular(sessions / f"{session_id}.json")

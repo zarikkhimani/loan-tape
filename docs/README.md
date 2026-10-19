@@ -10,6 +10,10 @@ Loan Tape 0.1.0 is an alpha; each guide distinguishes current behavior from plan
 | Install, launch, and review my first file | [Quick start](../README.md#start-here) |
 | Navigate worksheets or XML, select data, and inspect/check columns | [User guide](USER_GUIDE.md) |
 | Review dates and create an Excel deliverable | [Date review and export](DATE_ANALYSIS.md#desktop-review-and-excel-export) |
+| Review text repairs, spelling suggestions and exact replacements | [Reviewed text cleanup](TEXT_CLEANUP.md) |
+| Save and reuse ordered cleanup steps | [Reusable cleanup recipes](RECIPES.md) |
+| Export reviewed text/recipe results and compatible dates | [Reviewed text export](TEXT_EXPORT.md) |
+| Label and review borrower relationships | [Borrower relationships](ENTITY_MATCHING.md) |
 | Understand what is cleared when I exit | [Operating guide](OPERATIONS.md#local-records-and-retention) |
 | Define field meanings or edit a dictionary | [Dictionary packs](PACKS.md) |
 
@@ -28,8 +32,12 @@ Loan Tape 0.1.0 is an alpha; each guide distinguishes current behavior from plan
 
 - [Contributing](../CONTRIBUTING.md): environment setup, commands, and change review.
 - [Architecture](ARCHITECTURE.md): components, data flow, and implementation boundaries.
+- [Canonicalization integration](CANONICALIZATION.md): component selection,
+  compatibility probes, transformation APIs, text cleanup and exact rules, evidence and later phases.
 - [Release checklist](RELEASING.md): validation, package checks, and publication steps.
 - [Changelog](../CHANGELOG.md): changes by version.
 - [Working instructions](../AGENTS.md): repository conventions and data invariants.
 
 See [License](../LICENSE) for reuse terms.
+
+- [CSV/XML text review](SOURCE_ADAPTERS.md): complete scopes, explicit mappings, native evidence and reviewed changes.
