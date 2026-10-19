@@ -17,12 +17,12 @@ correctness. See [Product](docs/PRODUCT.md) for the maintained feature scope.
 
 | Version | Security updates |
 | --- | --- |
-| Latest `0.1.x` release | Yes |
+| Latest published alpha release | Yes |
 | Current `main` branch | Development fixes only; may be incomplete |
 | Earlier or modified copies | No guaranteed updates |
 
-This alpha has no long-term-support commitment. Upgrade to the latest tagged
-`0.1.x` release before reporting a problem that may already be fixed.
+This alpha has no long-term-support commitment. Upgrade to the latest published
+alpha release before reporting a problem that may already be fixed.
 
 ## Reporting a concern
 

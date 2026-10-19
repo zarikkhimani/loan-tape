@@ -1,7 +1,8 @@
 # Documentation
 
 Start with [Install and run](../README.md#start-here) for your first session.
-Loan Tape 0.1.0 is an alpha; each guide distinguishes current behavior from planned work.
+Loan Tape 0.2.0 is an alpha release candidate awaiting publication; each guide
+distinguishes current behavior from planned work.
 
 ## Using the app
 

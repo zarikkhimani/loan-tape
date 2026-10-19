@@ -96,8 +96,10 @@ The prepared Dependabot configuration uses the [uv ecosystem](https://docs.astra
 for the manifest/lockfile and separately checks GitHub Actions weekly. It does not
 auto-merge updates. uv/uv_build upgrades are manual so `.uv-version`, the required uv
 version, and the build-backend pin remain aligned. Review those pins during release
-preparation even when no update proposal appears. Hosted update behavior is unverified
-until the configuration is pushed and GitHub processes it.
+preparation even when no update proposal appears. If the updater reports
+`tool_version_not_supported`, review the supported version in that run's log,
+update all three pins together, and rerun local validation. Hosted update behavior
+is unverified until the configuration is pushed and GitHub processes it.
 
 CI uses read-only repository permissions, immutable action revisions, and disables
 persisted checkout credentials, following [GitHub's workflow security guidance](https://docs.github.com/en/actions/reference/security/secure-use).

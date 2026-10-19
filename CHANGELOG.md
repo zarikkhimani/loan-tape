@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+No changes recorded.
+
+## 0.2.0 - 2026-10-19
+
+Alpha release candidate; publication is pending. The existing 0.1.0 release is unchanged.
+
+- Expanded the README with format-specific capabilities, a complete review
+  workflow, output meanings, optional matching setup, session retention, and
+  validation commands.
+- Updated the release checklist for subsequent public alpha releases, with
+  protected-branch review, validation of the final merged commit, versioned
+  retained builds, checksums, draft releases, and preservation of prior releases.
+- Aligned the project-local uv tool and uv_build backend at 0.12.18 to match the
+  version supported by the Dependabot updater. Application dependency pins remain
+  unchanged.
 - Protected existing temporary files when CSV/XML settings, text audits or borrower
   artifacts encounter a staging-name collision. Settings locks are released even
   when temporary-file cleanup fails.
