@@ -18,8 +18,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         prog="loan-tape",
         description="Source-preserving loan-tape normalization and validation.",
         epilog=(
-            "File intake preserves sources. Column inspection and checks are available for saved Excel data sets; "
-            "cleaning and financial validation are not implemented yet. "
+            "File intake preserves sources. Saved Excel and XML data sets support column inspection and checks. "
+            "Saved Excel, CSV and XML scopes support reviewed text cleanup; general financial normalization is not implemented yet. "
             "Use 'loan-tape packs --help' for the independent dictionary pack catalog. "
             "See docs/ROADMAP.md for planned milestones."
         ),

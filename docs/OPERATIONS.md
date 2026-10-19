@@ -63,6 +63,10 @@ working directory for default runtime storage; `--storage-dir` can change intake
 | `.artifacts/xml-selections/` | Source-bound XML data set definitions and view positions | Session-only; removed on normal application exit. |
 | `.artifacts/column-definitions/` | Source-bound mappings, units, date formats, and rule metadata | Session-only; removed on normal application exit. |
 | `.artifacts/date-runs/` | Completed date-workflow settings, evidence, findings, and reconciliation | Session-only; use an explicit validated export for retained evidence. |
+| `.artifacts/transformations/` | Reviewed text proposals, exact rules, recipe bindings, approvals and derived revisions | Session-only; source-bound revisions and interrupted staging are removed on normal exit after workers stop. Existing date exports do not include text revisions. |
+| `.artifacts/recipes/` | Explicitly saved versioned templates, field meanings, cleanup settings and literal rules | Persistent after Exit. May contain borrower names or confidential field notes. Excluded from Git/packages; retain, back up and remove deliberately. No automatic pruning or overwrite. |
+| `.artifacts/text-exports/` | Temporary writer payloads and worker results | Removed after owned writer completion/failure. Forced termination may leave evidence for deliberate cleanup. |
+| Explicit reviewed-text `.xlsx` output | Complete selected data and replayable text/optional-date audit | Retained after Exit. Source tokens, including numeric tokens, are literal text. Store according to the data owner's requirements. |
 | `.artifacts/packs/` | Active catalog profiles and exact-content snapshots | Preserve to reproduce the chosen catalog. |
 | Other `.artifacts/` subfolders | Temporary comparisons, column values/findings, ordering stores, and validation output | May contain confidential values; normal cleanup is not secure erasure. |
 | `.local/` | Local analyst/developer notes, if used | Excluded from Git/builds; apply the same confidentiality rules. |
@@ -74,6 +78,20 @@ erasure and cannot clean up after forced termination. Preserve approved evidence
 an explicit export or other authorized record before exiting. Dictionary profiles and
 explicit exports remain separate. Do not delete a whole working directory as a routine
 troubleshooting step.
+
+Spelling candidates and rule drafts remain in the open review dialogs. Closing
+the rule editor discards its unaccepted edits; closing Clean text discards its
+accepted draft table. Applied rule evidence remains in the session revision until
+normal Exit. A spelling search never writes a source or publishes a revision.
+**Save recipe** explicitly retains configured steps for future review. Recipe runs
+stage approvals in memory and publish only the complete result. Discarding a run
+leaves saved recipes and the prior working result intact. See [RECIPES.md](RECIPES.md).
+
+**Export reviewed result...** writes through an isolated, job-owned xlwings process.
+It validates the saved workbook and current source/mappings before publication, and
+never replaces an existing target. Closing the app requests cancellation and waits
+for owned process cleanup. Completed exports remain outside session cleanup. See
+[TEXT_EXPORT.md](TEXT_EXPORT.md) for composition checks, output types and limits.
 
 ## Control evidence
 
@@ -103,6 +121,15 @@ incident procedure where one applies; this guide does not authorize external upl
 
 ## Maintenance
 
+The optional entity runtime and portable compiler under `.tools/` survive normal
+Exit. `.artifacts/entity-matching/` contains temporary source-bound training runs and
+fresh model binaries; normal Exit clears these after the owned matching job stops.
+Explicit JSON relationship exports survive. Models are never loaded from a user's
+chosen file. Revalidate the runtime with `dev.bat python scripts/setup_entity_matching.py
+--portable-compiler` after dependency changes; model execution rejects package
+inventory drift. `check.bat --entity-smoke` runs the actual installed-wheel workflow.
+See [ENTITY_MATCHING.md](ENTITY_MATCHING.md).
+
 Run `check.bat` after local dependency or implementation changes. Dependency update
 proposals require review and complete validation; there is no automatic merge.
 The prepared Dependabot configuration takes effect only after an authorized push
@@ -113,3 +140,12 @@ This guide adapts FinExtract's local processing, private reporting, and release
 discipline, reviewed at revision `26985d12fd257a70931af3d017785ce49c9f610f`.
 Loan Tape keeps its own locked tooling, source-preservation contracts, current
 feature boundaries, and public-alpha distribution controls.
+
+## CSV/XML adapter state
+
+Phase 8 saves source-bound complete scopes and field mappings under
+`.artifacts/source-adapters/`; reviewed runs use `.artifacts/transformations/`.
+Normal Exit removes these after owned workers stop. Explicit JSON audits outside
+managed session storage survive. Scopes record exact parser conventions, native
+locations and dictionary snapshots. [SOURCE_ADAPTERS.md](SOURCE_ADAPTERS.md) describes
+whole-file/group boundaries, explicit limits and the supported text workflow.

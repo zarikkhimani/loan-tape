@@ -93,7 +93,7 @@ def run(scenario, work):
             assert app.inspector.path.name == first.name
             assert app.tabs.select() == str(app.inspector.frame)
         elif scenario == "formats":
-            assert app.capability.get() == "Preview only · Complete-column review unavailable"
+            assert app.capability.get() == "CSV preview and complete-scope text review available"
             assert app.inspect_button.cget("text") == "Open file"
             assert not app.inspect_button.instate(["disabled"])
             cases = (

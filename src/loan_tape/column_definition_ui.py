@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import tkinter as tk
 from collections.abc import Callable
+from dataclasses import dataclass
 from tkinter import messagebox, ttk
 
 from loan_tape.column_definitions import (
@@ -56,18 +57,37 @@ def _format_choice(formats: tuple[str, ...]) -> str:
     return next((label for label, value in FORMAT_PRESETS.items() if value == formats), "")
 
 
+@dataclass(frozen=True)
+class DefinitionEditorContext:
+    """Native-format labels and persistence supplied by a non-workbook adapter."""
+
+    location: str
+    existing: ColumnDefinition | None
+    save: Callable[[ColumnDefinition], None]
+    remove: Callable[[], bool]
+
+
 class ColumnDefinitionWindow:
     def __init__(
         self,
         parent: tk.Misc,
-        table: SavedTable,
+        table: SavedTable | None,
         column: int,
         source_header: str,
         pack_store: PackStore,
         on_change: Callable[[], None] | None = None,
+        *,
+        context: DefinitionEditorContext | None = None,
     ) -> None:
+        if table is None and context is None:
+            raise ValueError("Column editor requires a saved source scope.")
+        self.context = context
         self.window = tk.Toplevel(parent)
-        self.window.title(f"Column definition — {column_label(column)}")
+        self.window.title(
+            f"Field definition - {column}"
+            if context
+            else f"Column definition — {column_label(column)}"
+        )
         self.window.geometry("820x760")
         self.window.minsize(720, 660)
         self.window.transient(parent.winfo_toplevel())
@@ -96,7 +116,9 @@ class ColumnDefinitionWindow:
         self.status = tk.StringVar(master=self.window)
 
         try:
-            self.existing = definition_for_column(table, column)
+            self.existing = (
+                context.existing if context else definition_for_column(self._excel_table(), column)
+            )
             self.catalog = pack_store.catalog("default")
             for item in sorted(
                 self.catalog.fields,
@@ -122,16 +144,15 @@ class ColumnDefinitionWindow:
         header = self.source_header.strip() or "No saved header"
         ttk.Label(
             page,
-            text=(
-                f"{self.table.name} · {self.table.selection.sheet}!{column_label(self.column)} · "
-                f"Header: {header}"
-            ),
+            text=(f"{self._location()} · Header: {header}"),
             wraplength=770,
         ).grid(row=1, sticky="ew", pady=(4, 10))
         ttk.Label(
             page,
             text=(
-                "This records what the source column means. Excel cell types and number formats "
+                "This records the explicit business meaning. Source text and presence states remain evidence."
+                if self.context
+                else "This records what the source column means. Excel cell types and number formats "
                 "remain source evidence; they do not choose the business meaning."
             ),
             foreground=MUTED,
@@ -225,7 +246,9 @@ class ColumnDefinitionWindow:
         ttk.Label(
             representation,
             text=(
-                "Excel numeric dates are interpreted with the workbook's 1900/1904 date system; "
+                "This records the accepted text date convention. The text adapter does not parse or rewrite dates."
+                if self.context
+                else "Excel numeric dates are interpreted with the workbook's 1900/1904 date system; "
                 "this choice governs literal text dates."
             ),
             foreground=MUTED,
@@ -442,7 +465,10 @@ class ColumnDefinitionWindow:
                     self.notes_text.get("1.0", "end-1c").strip() or None,
                 ),
             )
-            save_column_definition(self.table, definition)
+            if self.context:
+                self.context.save(definition)
+            else:
+                save_column_definition(self._excel_table(), definition)
         except (KeyError, OSError, ValueError) as error:
             self.status.set(str(error))
             self.status_label.configure(foreground=ERROR)
@@ -450,7 +476,7 @@ class ColumnDefinitionWindow:
         self.existing = definition
         self.remove_button.configure(state="normal")
         self.status.set(
-            f"Saved {column_label(self.column)} as {definition.field.label}. The source workbook was not changed."
+            f"Saved field {self.column} as {definition.field.label}. The source file was not changed."
         )
         self.status_label.configure(foreground="")
         if self.on_change is not None:
@@ -461,12 +487,16 @@ class ColumnDefinitionWindow:
             return
         if not messagebox.askyesno(
             "Remove column definition?",
-            f"Remove the saved definition for column {column_label(self.column)}?",
+            f"Remove the saved definition for {self._location()}?",
             parent=self.window,
         ):
             return
         try:
-            removed = remove_column_definition(self.table, self.column)
+            removed = (
+                self.context.remove()
+                if self.context
+                else remove_column_definition(self._excel_table(), self.column)
+            )
         except (OSError, ValueError) as error:
             self.status.set(str(error))
             self.status_label.configure(foreground=ERROR)
@@ -474,10 +504,21 @@ class ColumnDefinitionWindow:
         if removed:
             self.existing = None
             self.remove_button.configure(state="disabled")
-            self.status.set("Column definition removed. The source workbook was not changed.")
+            self.status.set("Column definition removed. The source file was not changed.")
             self.status_label.configure(foreground="")
             if self.on_change is not None:
                 self.on_change()
+
+    def _excel_table(self) -> SavedTable:
+        if self.table is None:
+            raise ValueError("This definition uses a non-workbook source adapter.")
+        return self.table
+
+    def _location(self) -> str:
+        if self.context:
+            return self.context.location
+        table = self._excel_table()
+        return f"{table.name} · {table.selection.sheet}!{column_label(self.column)}"
 
     def close(self) -> None:
         if self.closed:

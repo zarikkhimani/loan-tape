@@ -8,6 +8,7 @@ from copy import deepcopy
 from functools import partial
 from tkinter import messagebox, ttk
 from typing import TYPE_CHECKING, Any, Literal
+from weakref import proxy
 
 from loan_tape.pack_content import (
     managed_ids,
@@ -345,7 +346,9 @@ class ContentDialog:
 
 class ContentPages:
     def __init__(self, editor: PackEditor) -> None:
-        self.editor = editor
+        # The editor owns these pages. A strong back-reference can defer closed
+        # Tk variables to cyclic GC on a background pack worker.
+        self.editor = proxy(editor)
         self.trees: dict[str, ttk.Treeview] = {}
         self.details: dict[str, tk.Text] = {}
         self.buttons: dict[str, tuple[ttk.Button, ttk.Button, ttk.Button]] = {}

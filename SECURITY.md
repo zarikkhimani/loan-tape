@@ -17,20 +17,20 @@ correctness. See [Product](docs/PRODUCT.md) for the maintained feature scope.
 
 | Version | Security updates |
 | --- | --- |
-| Latest `0.1.x` release | Yes |
+| Latest published alpha release | Yes |
 | Current `main` branch | Development fixes only; may be incomplete |
 | Earlier or modified copies | No guaranteed updates |
 
-This alpha has no long-term-support commitment. Upgrade to the latest tagged
-`0.1.x` release before reporting a problem that may already be fixed.
+This alpha has no long-term-support commitment. Upgrade to the latest published
+alpha release before reporting a problem that may already be fixed.
 
 ## Reporting a concern
 
-Report suspected vulnerabilities privately to the repository owner. Where enabled,
-use [GitHub private reporting](https://github.com/zarikkhimani/loan-tape/security/advisories/new).
+Report suspected vulnerabilities privately to the repository owner using
+[GitHub private reporting](https://github.com/zarikkhimani/loan-tape/security/advisories/new).
 If that route is unavailable, contact the owner through an existing private channel;
-do not fall back to a public issue. Private reporting availability and response
-commitments have not been established by this local setup.
+do not fall back to a public issue. Private vulnerability reporting is enabled for
+this repository; no response-time commitment is established.
 
 Include the affected revision/version, operating system and Python/Excel versions,
 the reachable operation, expected and observed behavior, impact, and a minimal

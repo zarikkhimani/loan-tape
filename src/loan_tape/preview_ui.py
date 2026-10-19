@@ -16,6 +16,7 @@ from loan_tape.column_definition_ui import ColumnDefinitionWindow
 from loan_tape.column_profile import ColumnTable
 from loan_tape.column_ui import ColumnWindow
 from loan_tape.date_workflow_ui import DateWorkflowWindow
+from loan_tape.entity_ui import EntityWindow
 from loan_tape.excel_compare import ComparedPreview, read_parallel_preview
 from loan_tape.excel_process import open_in_excel
 from loan_tape.flow_ui import FlowBar
@@ -35,6 +36,8 @@ from loan_tape.packs import PackStore
 from loan_tape.ranges import CellRange, column_label
 from loan_tape.selection import SavedTable
 from loan_tape.session import AnalysisSession
+from loan_tape.source_adapter_ui import SourceAdapterWindow
+from loan_tape.text_cleanup_ui import TextCleanupWindow
 from loan_tape.theme_ui import (
     ACCENT,
     ACCENT_HOVER,
@@ -45,6 +48,7 @@ from loan_tape.theme_ui import (
     MUTED,
     SURFACE,
 )
+from loan_tape.transformations import TransformationRevision
 from loan_tape.workbook_index import WorkbookIndex, scan_workbook
 from loan_tape.workers import WorkerGroup
 from loan_tape.xml_navigation_ui import XmlNavigator
@@ -96,6 +100,12 @@ class PreviewPanel:
         self.whole_column: tuple[str, CellRange | None, int] | None = None
         self.definition_button: ttk.Button | None = None
         self.column_definition: ColumnDefinitionWindow | None = None
+        self.cleanup_button: ttk.Button | None = None
+        self.text_cleanup: TextCleanupWindow | None = None
+        self.entity_window: EntityWindow | None = None
+        self.entity_button: ttk.Button | None = None
+        self.source_adapter: SourceAdapterWindow | None = None
+        self.text_revisions: dict[str, TransformationRevision] = {}
         self.column_button: ttk.Button | None = None
         self.column_inspector: ColumnWindow | None = None
         self.check_button: ttk.Button | None = None
@@ -404,6 +414,11 @@ class PreviewPanel:
             csv_controls = FlowBar(options)
             if self.path.suffix.lower() != ".xml":
                 csv_controls.pack(fill="x")
+            adapter_actions = ttk.Frame(options)
+            adapter_actions.pack(fill="x", pady=(4, 0))
+            ttk.Button(
+                adapter_actions, text="CSV / XML text review...", command=self.open_source_adapter
+            ).pack(side="left")
             if self.path.suffix.lower() == ".xml":
                 options_row = ttk.Frame(options)
                 options_row.pack(fill="x")
@@ -634,6 +649,22 @@ class PreviewPanel:
         toolbar.add(self.column_actions)
         if self.path.suffix.lower() in {".xlsx", ".xlsm"}:
             self.date_actions = ttk.Frame(toolbar)
+            self.cleanup_button = ttk.Button(
+                self.date_actions,
+                text="Clean text",
+                command=self.open_text_cleanup,
+                state="disabled",
+                style="Navigator.TButton",
+            )
+            self.cleanup_button.pack(side="left", padx=(0, 6))
+            self.entity_button = ttk.Button(
+                self.date_actions,
+                text="Match borrowers",
+                command=self.open_entity_matching,
+                state="disabled",
+                style="Navigator.TButton",
+            )
+            self.entity_button.pack(side="left", padx=(0, 6))
             self.date_button = ttk.Button(
                 self.date_actions,
                 text="Date workflow",
@@ -885,6 +916,8 @@ class PreviewPanel:
         if self.date_button is not None:
             state = "normal" if saved and not self.busy else "disabled"
             self.date_button.configure(state=state)
+        if self.entity_button is not None:
+            self.entity_button.configure(state="normal" if saved and not self.busy else "disabled")
         if self.busy:
             hint = "Loading review tools…"
         elif not saved:
@@ -895,7 +928,12 @@ class PreviewPanel:
             hint = "Ready: choose a review action."
         self.workflow_hint.set(hint)
         self._sync_context()
-        for button in (self.definition_button, self.column_button, self.check_button):
+        for button in (
+            self.definition_button,
+            self.column_button,
+            self.check_button,
+            self.cleanup_button,
+        ):
             if button:
                 button.configure(
                     state="normal"
@@ -1330,6 +1368,81 @@ class PreviewPanel:
             self._update_column_actions,
         )
 
+    def open_text_cleanup(self) -> None:
+        if self.busy or self.preview is None or not self.column_selected or self.navigator is None:
+            return
+        try:
+            table = self.navigator.table_for_inspection()
+        except InspectionError as error:
+            self.navigator.message.set(str(error))
+            return
+        if self.text_cleanup is not None and not self.text_cleanup.closed:
+            self.text_cleanup.window.lift()
+            self.text_cleanup.window.focus_set()
+            return
+
+        def remember(revision: TransformationRevision | None) -> None:
+            if revision is None:
+                self.text_revisions.pop(table.id, None)
+            else:
+                self.text_revisions[table.id] = revision
+
+        self.text_cleanup = TextCleanupWindow(
+            self.frame,
+            self.path,
+            table,
+            self.preview.start_column + self.active_column,
+            self.pack_store,
+            self.navigator.table_for_inspection,
+            self._jump_to_column_row,
+            self.workers,
+            remember,
+            self.text_revisions.get(table.id),
+        )
+
+    def open_source_adapter(self) -> None:
+        if self.busy:
+            return
+        if self.source_adapter is not None and not self.source_adapter.closed:
+            self.source_adapter.window.lift()
+            return
+        try:
+            table = self.xml_navigation.table_for_inspection() if self.xml_navigation else None
+        except InspectionError as error:
+            self.status.set(str(error))
+            return
+        self.source_adapter = SourceAdapterWindow(
+            self.owner,
+            self.path,
+            self.pack_store,
+            self.workers,
+            xml_table=table,
+            current_xml=self.xml_navigation.table_for_inspection if self.xml_navigation else None,
+            jump_xml=self._jump_to_column_row if self.xml_navigation else None,
+        )
+
+    def open_entity_matching(self) -> None:
+        if self.busy or self.navigator is None:
+            return
+        try:
+            table = self.navigator.table_for_inspection()
+        except InspectionError as error:
+            self.navigator.message.set(str(error))
+            return
+        if self.entity_window is not None and not self.entity_window.closed:
+            self.entity_window.window.lift()
+            return
+        self.entity_window = EntityWindow(
+            self.frame,
+            self.path,
+            table,
+            self.pack_store,
+            self.navigator.table_for_inspection,
+            self._jump_to_column_row,
+            self.workers,
+            self.text_revisions.get(table.id),
+        )
+
     def inspect_column(self) -> None:
         controller = self.navigator or self.xml_navigation
         if self.busy or self.preview is None or not self.column_selected or controller is None:
@@ -1600,6 +1713,12 @@ class PreviewPanel:
             self.column_checker.close()
         if self.column_definition is not None:
             self.column_definition.close()
+        if self.text_cleanup is not None:
+            self.text_cleanup.close()
+        if self.entity_window is not None:
+            self.entity_window.close()
+        if self.source_adapter is not None:
+            self.source_adapter.close()
         if self.date_workflow is not None:
             self.date_workflow.close()
         if self.xsd_validator is not None:

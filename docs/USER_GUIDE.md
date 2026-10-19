@@ -1,5 +1,11 @@
 # User guide
 
+For optional borrower matching, save an Excel data set, map borrower meanings, then
+choose **Match borrowers** above the worksheet. The guided pair-label and group-review
+workflow saves separate JSON relationship evidence and preserves all loan rows.
+Install its isolated runtime once and review its limits in
+[Borrower relationships](ENTITY_MATCHING.md).
+
 Use the [main README](../README.md#start-here) for installation and a first review.
 This guide explains the desktop controls and the details behind their results.
 
@@ -60,7 +66,7 @@ On **Files**, select **Add file** or drop one file anywhere in the window. Savin
 - Resets file history on normal **Exit** or main-window **X**: intake working copies, source-bound selections/definitions, saved date runs, and session metadata are removed after background work stops. Explicit exports and dictionary-pack state remain. Forced termination can leave files for manual review.
 - Rejects explicit network/UNC and Windows device source paths. Use a regular file on this computer.
 - Checks file identity, size, and modification metadata before publishing a copy. A source that changes while being copied produces an error instead of a completed entry.
-- Intake accepts files by extension only. The selected-file capability label distinguishes full `.xlsx/.xlsm` review, XML review and XSD validation, CSV preview-only behavior, and preserved-only `.xls/.xlsb` files. Open file reads supported formats separately; formulas, macros, and links are not executed.
+- Intake accepts files by extension only. The selected-file capability label distinguishes full `.xlsx/.xlsm` review, XML review and XSD validation, CSV preview and complete-scope text review, and preserved-only `.xls/.xlsb` files. Open file reads supported formats separately; formulas, macros, and links are not executed.
 - Runs as a desktop application with no browser or local web server. Use **Exit** or the main window's **X** to close the program. It cancels readers and closes child windows, finishes an active file copy, waits for background cleanup, and then resets session files. If a working copy is still open in Excel, close it and choose Exit again.
 - Sources and manifests in the default `inputs` folder are ignored by Git and excluded from builds. Working copies are ordinary temporary local files, not a backup, durable evidence store, secure-erasure mechanism, or tamper-proof archive.
 
@@ -150,6 +156,35 @@ For a **saved .xlsx/.xlsm data set**, select a cell or column heading, then **Ch
 
 The action is read-only and uses the existing openpyxl column reader. The separate date-workflow export uses xlwings to write a new workbook. No cleaning, source changes, automatic duplicate removal, or financial field mapping occurs.
 
+## Clean text
+
+For a saved Excel data set, activate **Loan text field definitions** in **Dictionary
+packs**, then use **Define column** to map a source name to its text meaning.
+Choose **Clean text** to preview garbled-character repairs and optional NFC Unicode
+normalization across the complete data set. Select individual proposals with
+**Include selected changes**, enter a reviewer and reason, then **Apply selected
+changes**. Merely highlighting a row does not approve it.
+
+For spelling suggestions or literal corrections, choose **Exact replacements**,
+then **Edit rules / spelling**. Type an exact source value and use **Find similar
+spellings**, or enter a replacement manually. Choose a candidate explicitly to
+draft a rule. **Use rules for preview** returns to the complete-population review;
+you must still preview and approve individual cells. Category fields accept only
+exact replacements into their saved allowed-value list and disable spelling search.
+
+The result is separate session data; the source grid and workbook stay unchanged.
+Normal Exit clears it, and current date exports do not incorporate it. Read
+[Reviewed text cleanup](TEXT_CLEANUP.md) for eligibility, paging, stale-preview
+handling and field definitions. **Clean text → Recipes** captures the current working
+history as an ordered draft. Explicit **Save recipe** retains it locally after Exit.
+Loading requires template/mapping/context confirmation, a fresh preview and individual
+cell approvals for every step; only a complete successful run publishes a result.
+See [Reusable cleanup recipes](RECIPES.md). **Export reviewed result...** writes the
+complete approved result and its original evidence to a new workbook. Optional date
+inclusion requires a selected compatible saved run and an explicit checkbox. Source
+tokens, including numbers, remain literal text; valid dates become ISO text. Desktop
+Excel is required for writing. See [Reviewed text export](TEXT_EXPORT.md).
+
 ## XML column review
 
 For a **saved XML data set**, select a field heading or a cell, then use **Inspect column** or **Check column** beside the group controls. Save any edited name first. Both actions use every record in that saved group, including records and fields beyond the current preview page; choosing a nested group reviews that group only.
@@ -166,7 +201,7 @@ Reads are cancellable background operations and verify the complete document, fu
 
 For a saved Excel or XML data set, select a column or field on the analysis tab and open **Order**. The app carries over the complete saved data set—all of its data rows and columns—and uses the selected column only as the order key. It shows 50 source-linked rows and up to 10 source columns per page, with separate row and column navigation. **A–Z** and **Z–A** order the selected source text case-insensitively with exact text as a tie-breaker. **Ascending** and **Descending** put stored Excel numbers first in numeric order; other filled source kinds remain visible after them, while blank, empty, absent, and nil order values remain last. XML values stay text and are never inferred to be numbers.
 
-Ordering is a read-only view. Each displayed row stays intact while its position in the view changes; the original row is never rearranged. The view does not write a workbook, convert identifiers, trim text, parse missing-value tokens, or detach cells from their source row. Select a result and use **Jump to source** to return to its original row at the ordering column. A changed/unsaved data-set scope is rejected. Complete results use bounded temporary SQLite storage under `.artifacts/column-order/` and are removed on scope change, file close, cancellation, failure, or application shutdown. CSV remains limited to its current preview because saved CSV data-set scope is not implemented yet.
+Ordering is a read-only view. Each displayed row stays intact while its position in the view changes; the original row is never rearranged. The view does not write a workbook, convert identifiers, trim text, parse missing-value tokens, or detach cells from their source row. Select a result and use **Jump to source** to return to its original row at the ordering column. A changed/unsaved data-set scope is rejected. Complete results use bounded temporary SQLite storage under `.artifacts/column-order/` and are removed on scope change, file close, cancellation, failure, or application shutdown. CSV ordering remains unavailable. Its new complete saved scopes are used by the separate CSV / XML text review dialog.
 
 ## XML Schema validation
 
@@ -232,7 +267,7 @@ For a saved `.xlsx` or `.xlsm` data set, select a column and choose **Define col
 
 Definitions are stored for the current application session under `.artifacts/column-definitions/`, bound to the saved source hash, data-set identity, exact range/header scope, and source column. Each definition freezes the selected pack version, content fingerprint, field meaning, expected type, canonical unit, and exact category values. Editing a data-set range creates a different scope rather than silently applying earlier mappings. Normal application exit removes these definitions; the workbook and intake copy are never changed.
 
-Excel does not enforce one type for a whole column. Each cell has a stored kind, while Currency, Date, Percentage, and similar choices are commonly number formats. Loan Tape therefore treats those cell types/formats as source evidence, not as the column's financial meaning. A saved definition is the explicit intended interpretation; checking it against every source value is a later analysis step. CSV/XML column definitions and execution of these saved rules remain future work.
+Excel does not enforce one type for a whole column. Each cell has a stored kind, while Currency, Date, Percentage, and similar choices are commonly number formats. Loan Tape therefore treats those cell types/formats as source evidence, not as the column's financial meaning. A saved definition is the explicit intended interpretation; checking it against every source value is a later analysis step. Phase 8 provides CSV/XML field definitions through **CSV / XML text review...**. General execution of these saved rules remains future work.
 
 ## Warehouse Model mapping profile
 
@@ -277,3 +312,13 @@ analysis, SIFMA calendar screening, saved reproducible runs, and xlwings full-da
 exports with supporting review sheets. See [DATE_ANALYSIS.md](DATE_ANALYSIS.md) for usage, verified published
 holiday coverage, unknown-year behavior, and limits. Calendar facts and findings do
 not adjust source dates. The simpler one-column Date check keeps its prior behavior.
+
+## CSV/XML text review
+
+Open **CSV / XML text review...** from the file preview. For CSV, choose explicit
+encoding/separator/header conventions and save the complete file scope. For XML,
+save its complete record group in the existing preview first. Define fields from
+active dictionaries, preview repair/NFC or an exact replacement, then explicitly
+choose changes with a reviewer and reason. Source records and outcomes are paged
+through the complete scope. **Save JSON audit...** retains evidence after Exit.
+See [SOURCE_ADAPTERS.md](SOURCE_ADAPTERS.md) for missingness, limits and capabilities.
