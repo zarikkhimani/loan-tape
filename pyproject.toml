@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build==0.12.18"]
+requires = ["uv_build==0.13.4"]
 build-backend = "uv_build"
 
 [project]
@@ -67,7 +67,7 @@ dev = [
 ]
 
 [tool.uv]
-required-version = "==0.12.18"
+required-version = "==0.13.4"
 
 [tool.uv.build-backend]
 source-include = ["LICENSE", "SECURITY.md", "CONTRIBUTING.md", "CHANGELOG.md", "AGENTS.md", "docs/*.md"]

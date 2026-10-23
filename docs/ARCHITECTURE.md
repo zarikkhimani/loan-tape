@@ -337,7 +337,9 @@ and binding, validated during both publication and loading.
 and compatibility confirmation. `recipe_run_ui.py` reuses the existing native cell
 review controls for each step, with fresh choices and an explicit reject-all path.
 Only a completed run replaces the owner's working result. Owned workers, source
-invalidation, cancellation and shutdown clear staged runs. Service tests, native
+invalidation, cancellation and shutdown clear staged runs. Text review polling
+callbacks belong to the surviving parent widget so advancing a recipe can close
+a step window before Tk finishes retiring its timer callback. Service tests, native
 workflow tests and the installed-wheel text smoke cover reuse on a new synthetic
 source, retention, complete-run publication and failure handling. See
 [Reusable cleanup recipes](RECIPES.md). Phase 6 supplies text-result export.

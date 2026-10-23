@@ -6,6 +6,18 @@ import venv
 
 from _support import ROOT, UV_VERSION, configure_process_environment, executable, run
 
+# Reviewed wheel/hash from the Python security notice and PyPI release metadata:
+# https://discuss.python.org/t/109576
+# https://pypi.org/pypi/pip/26.2.2/json
+# Python's ensurepip may seed an older pip with compromised CA trust. Its first
+# download must verify this independent hash before installing or executing code.
+PIP_BOOTSTRAP = (
+    "pip @ https://files.pythonhosted.org/packages/3f/06/"
+    "3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/"
+    "pip-26.2.2-py3-none-any.whl"
+    "#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"
+)
+
 
 def main() -> int:
     if sys.version_info[:2] != (3, 12):
@@ -25,8 +37,30 @@ def main() -> int:
             tools_python,
             "-m",
             "pip",
+            "--isolated",
+            "--disable-pip-version-check",
+            "install",
+            "--no-index",
+            "--no-deps",
+            "--no-cache-dir",
+            "--only-binary=:all:",
+            "--require-hashes",
+            PIP_BOOTSTRAP,
+        ]
+    )
+    run(
+        [
+            tools_python,
+            "-m",
+            "pip",
+            "--isolated",
+            "--disable-pip-version-check",
             "install",
             "--no-cache-dir",
+            "--index-url",
+            "https://pypi.org/simple",
+            "--only-binary=:all:",
+            "--no-deps",
             f"uv=={UV_VERSION}",
         ]
     )

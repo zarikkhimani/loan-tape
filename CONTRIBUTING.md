@@ -2,6 +2,17 @@
 
 Start with Python 3.12 and the setup commands in [README.md](README.md). Setup is project-local; no activation or global tooling install is necessary.
 
+Rerun `setup.bat` (or `python3.12 scripts/setup.py`) to update an existing checkout's
+tools. Setup first installs pip 26.2.2 in `.tools/` from a direct wheel URL with a
+reviewed SHA-256 hash, without index lookups or dependency downloads. Only after
+that succeeds does it install uv 0.13.4 and sync the locked application environment.
+This also repairs the older pip seeded by Python when `.tools/` is first created.
+The pins address the [eMudhra/emSign certificate incident](https://discuss.python.org/t/109576);
+the first download's hash is checked even if the old pip still trusts the affected
+CA. A failed download or hash check stops setup. TLS verification stays enabled.
+Other projects, system Python installations, and the Windows trust store are
+outside this setup command's scope.
+
 Loan Tape is an alpha and welcomes focused bug fixes, tests, documentation, and
 small feature proposals that fit the maintained [product scope](docs/PRODUCT.md).
 Please do not attach real loan tapes, borrower information, intake manifests,

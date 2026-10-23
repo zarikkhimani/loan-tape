@@ -2,7 +2,12 @@
 
 ## Unreleased
 
-No changes recorded.
+- Updated the project-local uv tool and uv_build backend to 0.13.4 for the
+  eMudhra/emSign certificate incident. Setup now upgrades its own pip to 26.2.2
+  using a reviewed, SHA-256-pinned wheel before any package-index download,
+  including when Python seeds an older pip in a fresh tools environment.
+- Fixed recipe-step timer cleanup when an approval advances to the next review
+  window, preventing callbacks from being cleaned up against a destroyed dialog.
 
 ## 0.2.0 - 2026-10-19
 

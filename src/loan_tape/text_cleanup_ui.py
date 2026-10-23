@@ -47,6 +47,9 @@ class TextCleanupWindow:
         on_applied: Callable[[TransformationRevision | None], None],
         parent: TransformationRevision | None = None,
     ) -> None:
+        # A recipe result can destroy this window inside its polling callback.
+        # Keep the callback registered on the surviving owner until Tk retires it.
+        self.poll_owner = owner
         self.window = tk.Toplevel(owner)
         self.window.title(f"Clean text - {table.name}")
         self.window.geometry("1120x780")
@@ -100,7 +103,7 @@ class TextCleanupWindow:
         )
         self._refresh_context()
         self._buttons()
-        self.poll_id = self.window.after(100, self._poll)
+        self.poll_id = self.poll_owner.after(100, self._poll)
         self.window.protocol("WM_DELETE_WINDOW", self.close)
 
     def _build(self) -> None:
@@ -688,7 +691,7 @@ class TextCleanupWindow:
         except queue.Empty:
             pass
         self._buttons()
-        self.poll_id = self.window.after(100, self._poll)
+        self.poll_id = self.poll_owner.after(100, self._poll)
 
     def close(self) -> None:
         if self.closed:
@@ -701,7 +704,7 @@ class TextCleanupWindow:
         if self.rule_editor is not None:
             self.rule_editor.close()
         self.cancelled.set()
-        self.window.after_cancel(self.poll_id)
+        self.poll_owner.after_cancel(self.poll_id)
         for variable, command in self.traces:
             variable.trace_remove("write", command)
         self.window.destroy()

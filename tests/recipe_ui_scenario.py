@@ -1,5 +1,6 @@
 """Actual native recipe save/load, per-step review, discard and owned shutdown."""
 
+import faulthandler
 import os
 import sys
 from dataclasses import replace
@@ -38,6 +39,10 @@ def run(scenario, work):
     before = original.read_bytes()
     root = create_root()
     root.withdraw()
+    callback_errors = []
+    root.report_callback_exception = lambda kind, error, traceback: callback_errors.append(
+        f"{kind.__name__}: {error}"
+    )
     app = LoanTapeApp(root, intake)
     app.pack_store = store
     release = Event()
@@ -115,8 +120,21 @@ def run(scenario, work):
             assert child.review.preview.to_dict()["reconciliation"]["changed"] == 2
             choose(child, "2:1")
             child.justification.set("Explicit first-step choice.")
-            child.apply_button.invoke()
-            wait(root, lambda: manager.child is not child)
+            retired_window = child.window
+            deletecommand = retired_window.deletecommand
+            timer_errors = []
+
+            def delete_live_command(name):
+                if retired_window._tclCommands is None:
+                    timer_errors.append(name)
+                deletecommand(name)
+
+            # Detect cleanup against a destroyed timer owner even when Tcl
+            # happens to reject the deletion before Python sees the stale state.
+            with patch.object(retired_window, "deletecommand", side_effect=delete_live_command):
+                child.apply_button.invoke()
+                wait(root, lambda: manager.child is not child)
+            assert not timer_errors, "Recipe-step timer outlived its destroyed callback owner"
             retired = ref(child)
             child = manager.child
             app.workers.active_names()
@@ -189,6 +207,7 @@ def run(scenario, work):
             and load_recipe(saved_recipe).to_dict()["name"] == "Fictional recipe"
         )
         assert original.read_bytes() == before
+        assert not callback_errors, callback_errors
         print(f"{scenario}: native recipes, explicit approvals and retention passed")
     finally:
         release.set()
@@ -200,10 +219,14 @@ def run(scenario, work):
 if __name__ == "__main__":
     # Recipe behavior must not depend on Office startup fitting the 15-second UI
     # wait. The separate Excel checks retain actual Office integration coverage.
-    with patch(
-        "loan_tape.excel_compare.read_xlwings_preview",
-        side_effect=ComparisonSkipped(
-            "Optional Excel comparison is outside this recipe UI scenario."
-        ),
-    ):
-        run(sys.argv[1], Path(sys.argv[2]))
+    faulthandler.dump_traceback_later(35)
+    try:
+        with patch(
+            "loan_tape.excel_compare.read_xlwings_preview",
+            side_effect=ComparisonSkipped(
+                "Optional Excel comparison is outside this recipe UI scenario."
+            ),
+        ):
+            run(sys.argv[1], Path(sys.argv[2]))
+    finally:
+        faulthandler.cancel_dump_traceback_later()
